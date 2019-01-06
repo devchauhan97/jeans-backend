@@ -54,9 +54,9 @@ Route::post('/language/', array(
 	Route::post('/processContactUs', 'DefaultController@processContactUs');
 	
 	//news section
-	Route::get('/news', 'NewsController@news');
-	Route::get('/news-detail/{slug}', 'NewsController@newsDetail');
-	Route::post('/loadMoreNews', 'NewsController@loadMoreNews');	
+	// Route::get('/news', 'NewsController@news');
+	// Route::get('/news-detail/{slug}', 'NewsController@newsDetail');
+	// Route::post('/loadMoreNews', 'NewsController@loadMoreNews');	
 	
 	
 	Route::get('/clear-cache', function() {
