@@ -44,12 +44,11 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-        ],
-        'customer' => 
-          array (
+        ], 
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'customers',
-          ),
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -79,10 +78,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-        'customers' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
-            ]
+            'model' => App\Admin::class,
+        ],
     ],
 
     /*

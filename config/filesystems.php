@@ -69,7 +69,6 @@ return [
             'password' => env('FTP_PASSWORD'),
             'root' => '' // for example: /var/www/html/dev/images
         ],
-
     ],
 
 ];

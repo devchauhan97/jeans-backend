@@ -177,9 +177,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Karlomikus\Theme\ThemeServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
-
     ],
 
     /*
@@ -230,9 +227,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Theme' => Karlomikus\Theme\Facade\Theme::class,
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        
     ],
 
 ];
