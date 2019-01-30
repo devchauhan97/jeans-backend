@@ -39,7 +39,8 @@ use Illuminate\Http\Request;
 class AdminOrdersController extends Controller
 {
 	//add listingOrders
-	public function orders(){
+	public function orders()
+	{
 		$title = array('pageTitle' => Lang::get("labels.ListingOrders"));
 		//$language_id            				=   $request->language_id;
 		$language_id            				=   '1';			
@@ -52,14 +53,14 @@ class AdminOrdersController extends Controller
 		$index = 0;
 		$total_price = array();
 		
-		foreach($orders as $orders_data){
-			$orders_products = DB::table('orders_products')
+		foreach($orders as $orders_data) {
+			/*$orders_products = DB::table('orders_products')
 				->select('orders_id', DB::raw('SUM(final_price) as total_price'))
 				->where('orders_id', '=' ,$orders_data->orders_id)
 				->groupBy('orders_id')
 				->get();
 				
-			$orders[$index]->total_price = $orders_products[0]->total_price;		
+			$orders[$index]->total_price = $orders_products[0]->total_price;*/		
 			
 			$orders_status_history = DB::table('orders_status_history')
 				->LeftJoin('orders_status', 'orders_status.orders_status_id', '=', 'orders_status_history.orders_status_id')

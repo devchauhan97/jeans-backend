@@ -94,7 +94,7 @@ class AdminCustomersController extends Controller
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();	
-		$extensions = $myVar->imageType();			
+		$extensions = imageType();			
 		
 		$customerData = array();
 		$message = array();
@@ -320,7 +320,7 @@ class AdminCustomersController extends Controller
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();	
-		$extensions = $myVar->imageType();	
+		$extensions = imageType();	
 				
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
 			$image = $request->newImage;

@@ -89,34 +89,39 @@
                           {!! Form::hidden('products_id',  $result['data']['products_id'], array('class'=>'form-control', 'id'=>'products_id')) !!}
                           {!! Form::hidden('subcategory_id',  $result['subcategory_id'], array('class'=>'form-control', 'id'=>'subcategory_id')) !!}
                           {!! Form::hidden('is_default',  '1', array('class'=>'form-control', 'id'=>'is_default')) !!}
-                              
+               
 					  <div class="modal-body">
-                          <div class="form-group">
-							  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Language') }} </label>
-							  <div class="col-sm-10 col-md-8">
-								  <select class="form-control language_id" name="languages_id">		
-                                  	<option value="" class="field-validate">{{ trans('labels.ChooseLanguage') }}</option>								 
-									 @foreach($result['languages'] as $languages)
-									  <option value="{{ $languages->languages_id }}">{{ $languages->name }}</option>
-									 @endforeach										 
-								  </select>
-                              	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
-                              	{{ trans('labels.Chooselagnuage') }}</span>
+                <!-- <div class="form-group">
+  							  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Language') }} </label>
+  							  <div class="col-sm-10 col-md-8">
+  								  <select class="form-control language_id" name="languages_id">		
+                    	<option value="" class="field-validate">{{ trans('labels.ChooseLanguage') }}</option>								 
+  									 @foreach($result['languages'] as $languages)
+  									  <option value="{{ $languages->languages_id }}">{{ $languages->name }}</option>
+  									 @endforeach										 
+  								  </select>
+                  	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                  	{{ trans('labels.Chooselagnuage') }}</span>
                              
 							  </div>
 						  </div>
+                       -->      
                             
-                            
-                          <div class="form-group">
+              <div class="form-group">
 							  <label for="name" class="col-sm-2 col-md-4 control-label">
-                             	 {{ trans('labels.OptionName') }}                             	 
-                              </label>
+               	 {{ trans('labels.OptionName') }}                             	 
+                </label>
 							  <div class="col-sm-10 col-md-8">
-								  <select class="form-control default-option-id field-validate" name="products_options_id"></select><span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+								  <select class="form-control default-option-id field-validate" name="products_options_id">
+                    <option value=""> {{ trans('labels.AddOptionValueText') }} </option>
+                    @foreach($result['options'] as $options)
+                      <option value="{{ $options->products_options_id }}">{{ $options->products_options_name }}</option>
+                    @endforeach 
+                  </select>
+                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                             	{{ trans('labels.AddOptionNameText') }}
-                                 </span>
-                             
-							  </div>
+                   </span>
+                </div>
 						  </div>
 
 						   <div class="form-group">
@@ -127,8 +132,17 @@
                                   {{ trans('labels.AddOptionValueText') }}</span>
 							  </div>
 							</div>
+              <div class="form-group">
+                <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Image') }}</label>
+                <div class="col-sm-10 col-md-8">
+                  {!! Form::file('newImage', array('id'=>'newImage')) !!}
+                <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                {{ trans('labels.UploadAdditionalImageText') }}</span>
+                <br>
+                </div>
+              </div>
                             
-                            <div class="alert alert-danger addDefaultError" style="display: none; margin-bottom: 0;" role="alert"><i class="icon fa fa-ban"></i>{{ trans('labels.AddOptionErrorText') }} </div>
+              <div class="alert alert-danger addDefaultError" style="display: none; margin-bottom: 0;" role="alert"><i class="icon fa fa-ban"></i>{{ trans('labels.AddOptionErrorText') }} </div>
                       </div>
 					  <div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('labels.Close') }}</button>
@@ -151,22 +165,22 @@
            		<!-- deletedefaultattributemodal -->
 				<div class="modal fade" id="deletedefaultattributemodal" tabindex="-1" role="dialog" aria-labelledby="deletedefaultattributemodalLabel">
 				  <div class="modal-dialog" role="document">
-					<div class="modal-content deleteDefaultEmbed">
-					  
-				    </div>
+  					<div class="modal-content deleteDefaultEmbed">
+  					  
+  			    </div>
 				  </div>
             
              
-                </div>
-              
-            </div>
-          </div>
-          <!-- /.box-body --> 
         </div>
-        <!-- /.box --> 
+            
+        </div>
       </div>
-      <!-- /.col --> 
+        <!-- /.box-body --> 
+      </div>
+      <!-- /.box --> 
     </div>
+    <!-- /.col --> 
+  </div>
     <!-- /.row --> 
     
     <!-- Main row -->  
@@ -230,8 +244,8 @@
                  		
                   		
                   	 
-                  </tbody>
-                </table>
+          </tbody>
+        </table>
                 
                 <!-- addAttributeModal -->
 				<div class="modal fade" id="addAttributeModal" tabindex="-1" role="dialog" aria-labelledby="addAttributeModalLabel">
@@ -242,12 +256,12 @@
 						<h4 class="modal-title" id="addAttributeModalLabel">{{ trans('labels.AddOptions') }}</h4>
 					  </div>
 					  {!! Form::open(array('url' =>'admin/addnewproductattribute', 'name'=>'addattributefrom', 'id'=>'addattributefrom', 'method'=>'post', 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
-                              {!! Form::hidden('products_id',  $result['data']['products_id'], array('class'=>'form-control', 'id'=>'products_id')) !!}
-                              
-                              {!! Form::hidden('subcategory_id',  $result['subcategory_id'], array('class'=>'form-control', 'id'=>'subcategory_id')) !!}
-                              {!! Form::hidden('is_default',  '0', array('class'=>'form-control', 'id'=>'is_default')) !!}
+            {!! Form::hidden('products_id',  $result['data']['products_id'], array('class'=>'form-control', 'id'=>'products_id')) !!}
+            
+            {!! Form::hidden('subcategory_id',  $result['subcategory_id'], array('class'=>'form-control', 'id'=>'subcategory_id')) !!}
+            {!! Form::hidden('is_default',  '0', array('class'=>'form-control', 'id'=>'is_default')) !!}
 					  <div class="modal-body">	
-                      <div class="form-group">
+         <!-- <div class="form-group">
 							  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Language') }}</label>
 							  <div class="col-sm-10 col-md-8">
 								  <select class="form-control additional_language_id" name="languages_id">		
@@ -260,15 +274,16 @@
                               	{{ trans('labels.ChooseLanguage') }}</span>
                               
 							  </div>
-						  </div>
+						  </div> -->
                       					
 						  <div class="form-group">
 							  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.OptionName') }}  </label>
 							  <div class="col-sm-10 col-md-8">
-								  <select class="form-control  additional-option-id field-validate" name="products_options_id">										 
-									 <!--@foreach($result['options'] as $options)
-									  <option value="{{ $options->products_options_id }}">{{ $options->products_options_name }}</option>
-									 @endforeach-->										 
+								  <select class="form-control  additional-option-id field-validate" name="products_options_id">		
+                  	 <option value=""> {{ trans('labels.AddOptionValueText') }} </option>							 
+									  @foreach($result['options'] as $options)
+                      <option value="{{ $options->products_options_id }}">{{ $options->products_options_name }}</option>
+                    @endforeach 										 
 								  </select>  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
 								  {{ trans('labels.OptionNameText') }}
 								  </span>
@@ -283,17 +298,17 @@
 									  <option value="{{ $options_value->products_options_values_id }}">{{ $options_value->products_options_values_name }}</option>
 									 @endforeach-->										 
 								  </select>
-                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
-                                  {{ trans('labels.OptionValuesText') }}</span>
+                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                    {{ trans('labels.OptionValuesText') }}</span>
 							  </div>
 							</div>
 							
 							<div class="form-group">
 							  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.PricePrefix') }}</label>
 							  <div class="col-sm-10 col-md-8">
-								 {!! Form::text('price_prefix',  '+', array('class'=>'form-control', 'id'=>'price_prefix')) !!}
-                                 <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
-                                 {{ trans('labels.PricePrefixText') }}</span>
+								 {!! Form::select('price_prefix',  ['+'=>'+','-'=>'-'],'', ['class'=>'form-control', 'id'=>'price_prefix']) !!}
+                   <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                   {{ trans('labels.PricePrefixText') }}</span>
 							  </div>
 							</div>
 
@@ -304,9 +319,20 @@
                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.NumericValueError') }}</span>
 							  </div>
 							</div>
-                            <div class="alert alert-danger addError" style="display: none; margin-bottom: 0;" role="alert">
-                            {{ trans('labels.OpitonExistText') }}</div>
-                      </div>
+              <div class="alert alert-danger addError" style="display: none; margin-bottom: 0;" role="alert">
+                {{ trans('labels.OpitonExistText') }}</div>
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Image') }}</label>
+                <div class="col-sm-10 col-md-8">
+                  {!! Form::file('newImage', array('id'=>'newImage')) !!}
+                <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                {{ trans('labels.UploadAdditionalImageText') }}</span>
+                <br>
+                </div>
+              </div>
+
 					  <div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('labels.Close') }}</button>
 						<button type="button" class="btn btn-primary" id="addAttribute">{{ trans('labels.AddOption') }}</button>
@@ -362,3 +388,4 @@
   <!-- /.content -->
 
 @endsection 
+ 

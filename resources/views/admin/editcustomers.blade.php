@@ -93,7 +93,7 @@
                                     @if(!empty($data['customers'][0]->customers_picture))
                                     	<img width="150px" src="{{getFtpImage($data['customers'][0]->customers_picture)}}" class="img-circle">
                                     @else
-                                   	 <img width="150px" src="{{asset('').'/default_images/user.png' }}" class="img-circle">
+                                   	 <img width="150px" src="{{asset('default_images/user.png') }}" class="img-circle">
                                     @endif
                                   </div>
                                 </div>

@@ -47,10 +47,10 @@
                          
                             {!! Form::open(array('url' =>'admin/updateSlide', 'method'=>'post', 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
                               
-                                {!! Form::hidden('id',  $result['sliders'][0]->sliders_id , array('class'=>'form-control', 'id'=>'id')) !!}
-                                {!! Form::hidden('oldImage',  $result['sliders'][0]->sliders_image, array('id'=>'oldImage')) !!}
-                                
-                                <div class="form-group">
+                              {!! Form::hidden('id',  $result['sliders'][0]->sliders_id , array('class'=>'form-control', 'id'=>'id')) !!}
+                              {!! Form::hidden('oldImage',  $result['sliders'][0]->sliders_image, array('id'=>'oldImage')) !!}
+                                <input type="hidden" name="languages_id" value="1">
+                               <!--  <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Language') }}</label>
                                   <div class="col-sm-10 col-md-4">
                                       <select class="form-control" name="languages_id">
@@ -61,7 +61,7 @@
                                       <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                       {{ trans('labels.ChooseLanguageText') }}</span>
                                   </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Title') }} </label>

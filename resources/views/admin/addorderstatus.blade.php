@@ -45,11 +45,11 @@
                         <!-- form start -->                        
                          <div class="box-body">
                          
-                            {!! Form::open(array('url' =>'admin/addNewOrderStatus', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
-                            
-                            <div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Language') }}</label>
-								<div class="col-sm-10 col-md-4">
+                            {!! Form::open(array('url' =>'admin/add/order/status', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
+                            <input type="hidden" name="language_id" value="1">
+                            <!-- <div class="form-group">
+              								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Language') }}</label>
+              								<div class="col-sm-10 col-md-4">
                                     <select name="language_id" class="form-control">
                                     	@foreach($result['languages'] as $languages)
                                         	<option value="{{ $languages->languages_id }}">{{ $languages->name }}</option>
@@ -57,8 +57,8 @@
                                     </select>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                     {{ trans('labels.StatusLanguageText') }}</span>
-								</div>
-							</div>
+                							</div>
+                						</div> -->
                             
                             <div class="form-group">
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Set Default') }}</label>

@@ -84,6 +84,7 @@
                       <th>{{ trans('labels.Image') }}</th>
                       <th>{{ trans('labels.ProductDescription') }}</th>
                       <th>{{ trans('labels.AddedLastModifiedDate') }}</th>
+                      <th>{{ trans('labels.feature') }}</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -93,7 +94,7 @@
                     	<tr>
                             <td>{{ $product->products_id }}</td>
                             <td><img src="{{getFtpImage($product->products_image)}}" alt="" width=" 100px" height="100px"></td>
-                            <td width="45%">
+                            <td width="30%">
                             	<strong>{{ $product->products_name }} @if(!empty($product->products_model)) ( {{ $product->products_model }} ) @endif</strong><br>
                                 @if(!empty($product->manufacturers_name))
                                 <strong>{{ trans('labels.Manufacturer') }}:</strong> {{ $product->manufacturers_name }}<br>
@@ -122,7 +123,11 @@
                              	<strong>{{ trans('labels.AddedDate') }}: </strong> {{ $product->products_date_added }}<br>
                            		<strong>{{ trans('labels.ModifiedDate') }}: </strong>{{ $product->products_last_modified }}
                             </td>
-                           
+                           <td >
+                                <input type="checkbox" class="is_feature" name="is_feature" value="{{$product->products_id}}"
+                                  data={{$product->is_feature}} {{$product->is_feature ? 'checked': false}}>
+
+                           </td>
                             <td>
                             <ul class="nav table-nav">
                               <li class="dropdown">
@@ -132,7 +137,7 @@
                                 <ul class="dropdown-menu">
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="editproduct/{{ $product->products_id }}">{{ trans('labels.EditProduct') }}</a></li>
                                     <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="addproductattribute/{{ $product->products_id }}">{{ trans('labels.ProductAttributes') }}</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="add/product/attribute/{{ $product->products_id }}">{{ trans('labels.ProductAttributes') }}</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="addproductimages/{{ $product->products_id }}">{{ trans('labels.ProductImages') }}</a></li>
                                     <li role="presentation" class="divider"></li>

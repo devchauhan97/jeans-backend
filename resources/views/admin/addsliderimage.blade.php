@@ -43,7 +43,8 @@
                          <div class="box-body">
                          
                             {!! Form::open(array('url' =>'admin/addNewSlide', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
-                            	<div class="form-group">
+                            <input type="hidden" name="languages_id" value="1">
+                            	<!-- <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Language') }}</label>
                                   <div class="col-sm-10 col-md-4">
                                       <select class="form-control" name="languages_id">
@@ -54,7 +55,7 @@
                                       <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                       {{ trans('labels.ChooseLanguageText') }}</span>
                                   </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Title') }} </label>

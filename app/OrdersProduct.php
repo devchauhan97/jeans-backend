@@ -13,4 +13,10 @@ class OrdersProduct extends Model
 
 	//use user id of admin
 	protected $primaryKey = 'orders_products_id'; 
+
+	public  function orders_products()
+	{
+
+		return $this->belongTo(Order::class,'orders_id');
+	} 
 }

@@ -46,7 +46,7 @@
                          @if(!empty($unseenOrder->customers_picture))
                             <img src="{{getFtpImage($unseenOrder->customers_picture)}}" class="img-circle" alt="{{ $unseenOrder->customers_name }} Image">
                             @else
-                            <img src="{{asset('').'/default_images/user.png' }}" class="img-circle" alt="{{ $unseenOrder->customers_name }} Image">
+                            <img src="{{asset('default_images/user.png') }}" class="img-circle" alt="{{ $unseenOrder->customers_name }} Image">
                          @endif
                                                   
                       </div>
@@ -81,12 +81,12 @@
                          @if(!empty($newCustomer->customers_picture))
                             <img src="{{getFtpImage($newCustomer->customers_picture)}}" class="img-circle">
                             @else
-                            <img src="{{asset('').'/default_images/user.png' }}" class="img-circle" alt="{{ $newCustomer->customers_firstname }} Image">
+                            <img src="{{asset('default_images/user.png') }}" class="img-circle" alt="{{ $newCustomer->customers_firstname }} Image">
                          @endif
                       </div>
                       <h4>
                         {{ $newCustomer->customers_firstname }} {{ $newCustomer->customers_lastname }}
-                        <small><i class="fa fa-clock-o"></i> {{ date('d/m/Y', $newCustomer->created_at) }}</small>
+                        <small><i class="fa fa-clock-o"></i> {{ date('d/m/Y', strtotime($newCustomer->created_at)) }}</small>
                       </h4>
                       <p></p>
                     </a>

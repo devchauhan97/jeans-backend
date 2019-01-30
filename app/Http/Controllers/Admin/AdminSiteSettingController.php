@@ -26,42 +26,13 @@ use Illuminate\Http\Request;
 
 class AdminSiteSettingController extends Controller
 {
-	public function slugify($slug){
-		
-	  // replace non letter or digits by -
-	  $slug = preg_replace('~[^\pL\d]+~u', '-', $slug);
 	
-	  // transliterate
-	  if (function_exists('iconv')){
-		$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
-	  }
 	
-	  // remove unwanted characters
-	  $slug = preg_replace('~[^-\w]+~', '', $slug);
 	
-	  // trim
-	  $slug = trim($slug, '-');
-	
-	  // remove duplicate -
-	  $slug = preg_replace('~-+~', '-', $slug);
-	
-	  // lowercase
-	  $slug = strtolower($slug);
-	
-	  if (empty($slug)) {
-		return 'n-a';
-	  }
-	
-	  return $slug;
-	}
-	
-	public function imageType(){	
-		$extensions = array('gif','jpg','jpeg','png');	
-		return $extensions;
-	}
 	
 	//orderstatus
-	public function orderstatus(Request $request){
+	public function orderstatus(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.ListingOrderStatus"));		
 		
 		$result = array();
@@ -76,7 +47,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//addorderstatus
-	public function addorderstatus(Request $request){
+	public function addorderstatus(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.AddOrderStatus"));
 		$result = array();
 		
@@ -87,7 +59,8 @@ class AdminSiteSettingController extends Controller
 	}
 		
 	//addNewOrderStatus	
-	public function addNewOrderStatus(Request $request){
+	public function addNewOrderStatus(Request $request)
+	{
 		
 		//total records
 		$orders_status = DB::table('orders_status')->get();
@@ -111,7 +84,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//editorderstatus
-	public function editorderstatus(Request $request){		
+	public function editorderstatus(Request $request)
+	{		
 		$title = array('pageTitle' => Lang::get("labels.EditOrderStatus"));
 		$result = array();		
 		
@@ -129,7 +103,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//updateOrderStatus	
-	public function updateOrderStatus(Request $request){
+	public function updateOrderStatus(Request $request)
+	{
 		
 		if($request->public_flag==1){
 			$languages = DB::table('orders_status')->where('public_flag','=',1)->where('language_id','=',$request->language_id)->update([
@@ -148,25 +123,29 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//deleteOrderStatus
-	public function deleteOrderStatus(Request $request){
+	public function deleteOrderStatus(Request $request)
+	{
 		DB::table('orders_status')->where('orders_status_id', $request->id)->delete();
 		return redirect()->back()->withErrors([Lang::get("labels.OrderStatusDeletedMessage")]);
 	}
 		
 	//getlanguages
-	public function getlanguages(){
+	public function getlanguages()
+	{
 		$languages = DB::table('languages')->get();
 		return $languages;
 	}
 	
 	//getsinglelanguages
-	public function getSingleLanguages($language_id){
+	public function getSingleLanguages($language_id)
+	{
 		$languages = DB::table('languages')->get();
 		return $languages;
 	}
 	
 	//languages
-	public function languages(Request $request){
+	public function languages(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.ListingLanguages"));		
 		
 		$result = array();
@@ -190,7 +169,7 @@ class AdminSiteSettingController extends Controller
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
 			$image = $request->newImage;
@@ -237,7 +216,7 @@ class AdminSiteSettingController extends Controller
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
 			$image = $request->newImage;
@@ -350,16 +329,18 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//update setting	
-	public function updateSetting(Request $request){
+	public function updateSetting(Request $request)
+	{
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
-		foreach($request->all() as $key => $value){	
+		foreach($request->all() as $key => $value) {	
 			
 			//website logo
-			if($key=='website_logo'){				
+			if($key == 'website_logo' ) {
+
 				if($request->hasFile('website_logo') and in_array($request->website_logo->extension(), $extensions)){
 					$dir="site_images/";
 					if (!file_exists($dir) and !is_dir($dir)) {
@@ -370,6 +351,7 @@ class AdminSiteSettingController extends Controller
 					$image->move(storage_path('app/public').'/site_images/', $fileName);
 					$value = 'site_images/'.$fileName; 
 					storeImage($value);	
+					
 				}else{
 					$value = $request->oldImage;
 				}				

@@ -27,11 +27,11 @@
         </li> -->
         
         
-        <li class="treeview {{ Request::is('admin/manufacturers') ? 'active' : '' }} {{ Request::is('admin/addmanufacturer') ? 'active' : '' }} {{ Request::is('admin/editmanufacturer/*') ? 'active' : '' }} ">
+        <!-- <li class="treeview {{ Request::is('admin/manufacturers') ? 'active' : '' }} {{ Request::is('admin/addmanufacturer') ? 'active' : '' }} {{ Request::is('admin/editmanufacturer/*') ? 'active' : '' }} ">
           <a href="{{ URL::to('admin/manufacturers')}}">
             <i class="fa fa-industry" aria-hidden="true"></i> <span>{{ trans('labels.link_manufacturer') }}</span>
           </a>
-        </li>
+        </li> -->
         
         <li class="treeview {{ Request::is('admin/categories') ? 'active' : '' }} {{ Request::is('admin/addcategory') ? 'active' : '' }} {{ Request::is('admin/editCategory/*') ? 'active' : '' }} {{ Request::is('admin/subcategories') ? 'active' : '' }}  {{ Request::is('admin/addsubcategory') ? 'active' : '' }}  {{ Request::is('admin/editsubcategory/*') ? 'active' : '' }}">
           <a href="#">
@@ -55,7 +55,7 @@
           </ul>
         </li>
         
-        <li class="treeview {{ Request::is('admin/newscategories') ? 'active' : '' }} {{ Request::is('admin/addnewscategory') ? 'active' : '' }} {{ Request::is('admin/editnewscategory/*') ? 'active' : '' }} {{ Request::is('admin/news') ? 'active' : '' }}  {{ Request::is('admin/addsubnews') ? 'active' : '' }}  {{ Request::is('admin/editsubnews/*') ? 'active' : '' }}">
+        <!-- <li class="treeview {{ Request::is('admin/newscategories') ? 'active' : '' }} {{ Request::is('admin/addnewscategory') ? 'active' : '' }} {{ Request::is('admin/editnewscategory/*') ? 'active' : '' }} {{ Request::is('admin/news') ? 'active' : '' }}  {{ Request::is('admin/addsubnews') ? 'active' : '' }}  {{ Request::is('admin/editsubnews/*') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-database" aria-hidden="true"></i>
 <span>{{ trans('labels.link_news') }}</span> <i class="fa fa-angle-left pull-right"></i>
@@ -64,7 +64,7 @@
           	<li class="{{ Request::is('admin/newscategories') ? 'active' : '' }} {{ Request::is('admin/addnewscategory') ? 'active' : '' }} {{ Request::is('admin/editnewscategory/*') ? 'active' : '' }}"><a href="{{ URL::to('admin/newscategories')}}"><i class="fa fa-circle-o"></i>{{ trans('labels.link_news_categories') }}</a></li>
             <li class="{{ Request::is('admin/news') ? 'active' : '' }}  {{ Request::is('admin/addsubnews') ? 'active' : '' }}  {{ Request::is('admin/editsubnews/*') ? 'active' : '' }}"><a href="{{ URL::to('admin/news')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_sub_news') }}</a></li>
           </ul>
-        </li>
+        </li> -->
         
         <li class="treeview {{ Request::is('admin/customers') ? 'active' : '' }}  {{ Request::is('admin/addcustomers') ? 'active' : '' }}  {{ Request::is('admin/editcustomers/*') ? 'active' : '' }}">
           <a href="{{ URL::to('admin/customers')}}">
@@ -89,7 +89,7 @@
           <a href="{{ URL::to('admin/coupons')}}" ><i class="fa fa-tablet" aria-hidden="true"></i> <span>{{ trans('labels.link_coupons') }}</span></a>
         </li>
         
-        <li class="treeview {{ Request::is('admin/devices') ? 'active' : '' }} {{ Request::is('admin/viewdevices/*') ? 'active' : '' }} {{ Request::is('admin/notifications') ? 'active' : '' }}">
+       <!--  <li class="treeview {{ Request::is('admin/devices') ? 'active' : '' }} {{ Request::is('admin/viewdevices/*') ? 'active' : '' }} {{ Request::is('admin/notifications') ? 'active' : '' }}">
           <a href="{{ URL::to('admin/devices')}} ">
             <i class="fa fa-bell-o" aria-hidden="true"></i>
 <span>{{ trans('labels.link_notifications') }}</span> <i class="fa fa-angle-left pull-right"></i>
@@ -102,7 +102,7 @@
             	<a href="{{ URL::to('admin/notifications') }}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_send_notifications') }}</a>
             </li>      
           </ul>
-        </li>
+        </li> -->
         
         <li class="treeview {{ Request::is('admin/orders') ? 'active' : '' }}  {{ Request::is('admin/addOrders') ? 'active' : '' }}  {{ Request::is('admin/vieworder/*') ? 'active' : '' }}">
           <a href="{{ URL::to('admin/orders')}}" ><i class="fa fa-list-ul" aria-hidden="true"></i> <span> {{ trans('labels.link_orders') }}</span>
@@ -142,7 +142,7 @@
           
             <li class="{{ Request::is('admin/webpages') ? 'active' : '' }}  {{ Request::is('admin/addwebpage') ? 'active' : '' }}  {{ Request::is('admin/editwebpage/*') ? 'active' : '' }}"><a href="{{ URL::to('admin/webpages')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.content_pages') }}</a></li>
             
-            <li class="{{ Request::is('admin/webthemes') ? 'active' : '' }} "><a href="{{ URL::to('admin/webthemes')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.website_themes') }}</a></li>
+            <!-- <li class="{{ Request::is('admin/webthemes') ? 'active' : '' }} "><a href="{{ URL::to('admin/webthemes')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.website_themes') }}</a></li> -->
             
             <li class="{{ Request::is('admin/seo') ? 'active' : '' }} "><a href="{{ URL::to('admin/seo')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.seo content') }}</a></li>
             
@@ -187,7 +187,7 @@
           	<li class="{{ Request::is('admin/facebooksettings') ? 'active' : '' }}"><a href="{{ URL::to('admin/facebooksettings')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_facebook') }}</a></li>
             
             <li class="{{ Request::is('admin/googlesettings') ? 'active' : '' }}"><a href="{{ URL::to('admin/googlesettings')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_google') }}</a></li>
-            <li class="{{ Request::is('admin/pushnotification') ? 'active' : '' }}"><a href="{{ URL::to('admin/pushnotification')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_push_notification') }}</a></li>
+            <!-- <li class="{{ Request::is('admin/pushnotification') ? 'active' : '' }}"><a href="{{ URL::to('admin/pushnotification')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_push_notification') }}</a></li> -->
              <li class="{{ Request::is('admin/alertsetting') ? 'active' : '' }}"><a href="{{ URL::to('admin/alertsetting')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.alertSetting') }}</a></li>
             <li class="{{ Request::is('admin/setting') ? 'active' : '' }}"><a href="{{ URL::to('admin/setting')}}"><i class="fa fa-circle-o"></i> {{ trans('labels.link_setting') }}</a></li>
             

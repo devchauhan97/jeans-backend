@@ -10,7 +10,7 @@
       <li class="active">{{ trans('labels.AddCategories') }}</li>
     </ol>
   </section>
-  
+
   <!-- Main content -->
   <section class="content"> 
     <!-- Info boxes --> 
@@ -35,18 +35,19 @@
                         <!-- /.box-header -->
                         <br>                       
                         @if (count($errors) > 0)
-							  @if($errors->any())
-								<div class="alert alert-success alert-dismissible" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  {{$errors->first()}}
-								</div>
-							  @endif
-						@endif
+  						  @if($errors->any())
+  							<div class="alert alert-success alert-dismissible" role="alert">
+  							  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  							  {{$errors->first()}}
+  							</div>
+  						  @endif
+  					@endif
                         
                         <!-- form start -->                        
                          <div class="box-body">
                          
                             {!! Form::open(array('url' =>'admin/addnewcategory', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
+
                               @foreach($result['languages'] as $languages)
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Name') }} ({{ $languages->name }})</label>
@@ -57,6 +58,7 @@
                                   </div>
                                 </div>
                                @endforeach
+                               
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Image') }}</label>
                                   <div class="col-sm-10 col-md-4">
@@ -74,7 +76,17 @@
                                     <br>
                                   </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Status') }}</label>
+                                  <div class="col-sm-10 col-md-4">
+                                      <select class="form-control" id="categories_status" name="categories_status">
+                                         <option value="0">{{ trans('labels.SelectStatus') }}</option>
+                                          <option value="0">Inactive</option>
+                                           <option value="1">Active</option>
+                                      </select>
+                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;margin-top: 0;">{{ trans('labels.catStatusText') }}</span>
+                                  </div>
+                                </div>
                               <!-- /.box-body -->
                               <div class="box-footer text-center">
                                 <button type="submit" class="btn btn-primary">{{ trans('labels.AddCategory') }}</button>

@@ -27,7 +27,8 @@ use Illuminate\Http\Request;
 
 class AdminShippingController extends Controller
 {
-	public function upsData(){
+	public function upsData()
+	{
 		$ups_description = DB::table('shipping_description')->where([
 				['language_id', '=', '1'],
 				['table_name', '=', 'ups_shipping']
@@ -57,14 +58,20 @@ class AdminShippingController extends Controller
 	}
 	
 	//shippingMethods
-	public function shippingmethods(Request $request){
+	public function shippingMethods(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.ShippingMethods"));		
 		
-		if(!empty($request->id)){
-			if($request->active=='no'){
+		if(!empty($request->id)) {
+
+			if($request->active=='no') {
+
 				$status = '0';
-			}elseif($request->active=='yes'){
+				
+			} elseif($request->active=='yes') {
+
 				$status = '1';
+
 			}
 			DB::table('shipping_methods')->where('shipping_methods_id', '=', $request->id)->update([
 				'status'		 =>	  $status

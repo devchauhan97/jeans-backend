@@ -77,7 +77,7 @@ class AdminNewsCategoriesController extends Controller
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 				
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
 			$image = $request->newImage;
@@ -119,9 +119,9 @@ class AdminNewsCategoriesController extends Controller
 				$slug_count = 0;
 				do{
 					if($slug_count==0){
-						$currentSlug = $myVar->slugify($slug);
+						$currentSlug = slugify($slug);
 					}else{
-						$currentSlug = $myVar->slugify($old_slug.'-'.$slug_count);
+						$currentSlug = slugify($old_slug.'-'.$slug_count);
 					}
 					$slug = $currentSlug;
 					//$checkSlug = DB::table('news_categories')->where('news_categories_slug',$currentSlug)->where('categories_id','!=',$request->id)->get();
@@ -197,7 +197,7 @@ class AdminNewsCategoriesController extends Controller
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		//check slug
 		if($request->old_slug!=$request->slug ){
@@ -205,9 +205,9 @@ class AdminNewsCategoriesController extends Controller
 			$slug_count = 0;
 			do{
 				if($slug_count==0){
-					$currentSlug = $myVar->slugify($request->slug);
+					$currentSlug = slugify($request->slug);
 				}else{
-					$currentSlug = $myVar->slugify($request->slug.'-'.$slug_count);
+					$currentSlug = slugify($request->slug.'-'.$slug_count);
 				}
 				$slug = $currentSlug;
 				$checkSlug = DB::table('news_categories')->where('news_categories_slug',$currentSlug)->where('categories_id','!=',$request->id)->get();

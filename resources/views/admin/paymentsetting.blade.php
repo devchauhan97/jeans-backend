@@ -47,9 +47,9 @@
                             <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.PaymentMetods') }}</label>
                                 <div class="col-sm-10 col-md-4">
-                                    <label class=" control-label">
+                                   <!--  <label class=" control-label">
                                           <input type="checkbox" name="brantree_active" id="brantree_active" value="1" class="checkboxess" @if($result['shipping_methods'][0]->brantree_active==1) checked @endif > &nbsp;{{ trans('labels.Brantree') }}
-                                    </label><br>
+                                    </label><br> -->
 
                                     <label class=" control-label">
                                           <input type="checkbox" name="stripe_active" id="stripe_active" value="1" class="checkboxess" @if($result['shipping_methods'][0]->stripe_active==1) checked @endif > &nbsp;{{ trans('labels.Stripe') }}
@@ -61,80 +61,15 @@
                                     </label><br>
 
                                     
-                                    <label class=" control-label">
+                                   <!--  <label class=" control-label">
                                           <input type="checkbox" name="paypal_status" id="paypal_status" value="1" class="checkboxess " @if($result['shipping_methods'][0]->paypal_status==1) checked @endif > &nbsp;{{ trans('labels.paypal') }}
-                                    </label><br>
+                                    </label><br> -->
                                                                         
                                 <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.PaymentMetodsText') }}</span>
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group">
-                           		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.BraintreeAccountType') }}</label>
-                                <div class="col-sm-10 col-md-4">
-                                    <label class=" control-label">
-                                          <input type="radio" name="braintree_enviroment" value="0" class="flat-red" @if($result['shipping_methods'][0]->braintree_enviroment==0) checked @endif > &nbsp;{{ trans('labels.Sanbox') }}
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    
-                                    <label class=" control-label">
-                                          <input type="radio" name="braintree_enviroment" value="1" class="flat-red" @if($result['shipping_methods'][0]->braintree_enviroment==1) checked @endif >  &nbsp;{{ trans('labels.Live') }}
-                                    </label>
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.BraintreeAccountTypeText') }}</span>
-                                </div>
-                            </div>
                             
-                             {!! Form::hidden('braintree_name',  $result['shipping_methods'][0]->braintree_name , array('class'=>'form-control', 'id'=>'braintree_name')) !!}
-                                @foreach($result['braintree_description'] as $description_data)
-                                    <div class="form-group">
-                                      <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.braintreename') }} ({{ $description_data['language_name'] }})</label>
-                                      <div class="col-sm-10 col-md-4">
-                                        <input type="text" name="briantree_name_<?=$description_data['languages_id']?>" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif" value="{{$description_data['name']}}">
-                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.braintreename') }} ({{ $description_data['language_name'] }}).</span>          
-                                        <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
-                                      </div>
-                                    </div>
-                                     <div class="form-group">
-                                      <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.braintreeCard') }}-{{ trans('labels.Braintree') }} ({{ $description_data['language_name'] }})</label>
-                                      <div class="col-sm-10 col-md-4">
-                                        <input type="text" name="sub_name_1_<?=$description_data['languages_id']?>" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif" value="{{$description_data['sub_name_1']}}">
-                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.braintreeCard') }}-{{ trans('labels.Braintree') }} ({{ $description_data['language_name'] }}).</span>          
-                                        <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.paypal') }}-{{ trans('labels.Braintree') }} ({{ $description_data['language_name'] }})</label>
-                                      <div class="col-sm-10 col-md-4">
-                                        <input type="text" name="sub_name_2_<?=$description_data['languages_id']?>" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif" value="{{$description_data['sub_name_2']}}">
-                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.paypal') }}-{{ trans('labels.Braintree') }} ({{ $description_data['language_name'] }}).</span>          
-                                        <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
-                                      </div>
-                                    </div>
-                                     
-                                 
-                              	@endforeach
-                             
-							<div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.MerchantID') }}</label>
-								<div class="col-sm-10 col-md-4">
-                                    <input type="text" name="braintree_merchant_id" id="braintree_merchant_id" value="{{$result['shipping_methods'][0]->braintree_merchant_id}}" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif">
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.MerchantIDText') }}</span>
-								</div>
-							</div>						
-							<div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.PublicKey') }}</label>
-								<div class="col-sm-10 col-md-4">
-                                	<input type="text" name="braintree_public_key" id="braintree_public_key" value="{{$result['shipping_methods'][0]->braintree_public_key}}" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif">
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.PublicKeyText') }}</span>
-								</div>
-							</div>	
-                            <div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.PrivateKey') }}</label>
-								<div class="col-sm-10 col-md-4">
-                                <input type="text" name="braintree_private_key" id="braintree_private_key" value="{{$result['shipping_methods'][0]->braintree_private_key}}" class="form-control brantree_active @if($result["shipping_methods"][0]->brantree_active==1) field-validate @endif">
-									<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.PrivateKeyText') }}</span>
-								</div>
-							</div>
-                            <hr>
                             <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.StripeEnviroment') }}</label>
                                 <div class="col-sm-10 col-md-4">
@@ -164,59 +99,23 @@
                               	@endforeach
                                                          
                             <div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.SecretKey') }}</label>
-								<div class="col-sm-10 col-md-4">
-									<input type="text" name="secret_key" id="secret_key" value="{{$result['shipping_methods'][0]->secret_key}}" class="form-control stripe_active @if($result["shipping_methods"][0]->stripe_active==1) field-validate @endif">
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.SecretKeyText') }}</span>
-								</div>
-							</div>	
-													
-							<div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Key') }} </label>
-								<div class="col-sm-10 col-md-4">
-                               		 <input type="text" name="publishable_key" id="publishable_key" value="{{$result['shipping_methods'][0]->publishable_key}}" class="form-control stripe_active @if($result["shipping_methods"][0]->stripe_active==1) field-validate @endif">
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.StripeKeyText') }}</span>
-								</div>
-							</div>	
+              								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.SecretKey') }}</label>
+              								<div class="col-sm-10 col-md-4">
+              									<input type="text" name="secret_key" id="secret_key" value="{{$result['shipping_methods'][0]->secret_key}}" class="form-control stripe_active @if($result["shipping_methods"][0]->stripe_active==1) field-validate @endif">
+                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.SecretKeyText') }}</span>
+              								</div>
+              							</div>	
+              													
+              							<div class="form-group">
+              								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Key') }} </label>
+              								<div class="col-sm-10 col-md-4">
+                                             		 <input type="text" name="publishable_key" id="publishable_key" value="{{$result['shipping_methods'][0]->publishable_key}}" class="form-control stripe_active @if($result["shipping_methods"][0]->stripe_active==1) field-validate @endif">
+                                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.StripeKeyText') }}</span>
+              								</div>
+              							</div>	
                            	
                            	<hr>
                            	
-                           	<div class="form-group">
-                           		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.paypalEnviroment') }}</label>
-                                <div class="col-sm-10 col-md-4">
-                                    <label class=" control-label">
-                                          <input type="radio" name="paypal_enviroment" value="0" class="flat-red" @if($result['shipping_methods'][0]->paypal_enviroment==0) checked @endif > &nbsp;{{ trans('labels.Sanbox') }}
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    
-                                    <label class=" control-label">
-                                          <input type="radio" name="paypal_enviroment" value="1" class="flat-red" @if($result['shipping_methods'][0]->paypal_enviroment==1) checked @endif >  &nbsp;{{ trans('labels.Live') }}
-                                    </label>
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.PaypalEnviromentText') }}</span>
-                                </div>
-                            </div>
-                             
-                            {!! Form::hidden('paypal_name',  $result['shipping_methods'][0]->paypal_name , array('class'=>'form-control', 'id'=>'paypal_name')) !!}
-                            @foreach($result['paypal_description'] as $description_data)
-                                <div class="form-group">
-                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.paypalName') }} ({{ $description_data['language_name'] }})</label>
-                                  <div class="col-sm-10 col-md-4">
-                                    <input type="text" name="paypal_name_<?=$description_data['languages_id']?>" class="form-control paypal_status @if($result["shipping_methods"][0]->paypal_status==1) field-validate @endif" value="{{$description_data['name']}}">
-                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.paypalName') }} ({{ $description_data['language_name'] }}).</span>          
-                                    <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
-                                  </div>
-                                </div>                             
-                            @endforeach
-                             
-                            
-                            <div class="form-group">
-								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.paypalId') }}</label>
-								<div class="col-sm-10 col-md-4">
-                               		<input type="text" name="paypal_id" id="paypal_id" value="{{$result['shipping_methods'][0]->paypal_id}}" class="form-control paypal_status @if($result["shipping_methods"][0]->paypal_status==1) field-validate @endif">
-                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.paypalIdText') }}</span>
-								</div>
-							</div>	
-                           	
-                            <hr>
                            	
                            	
                            	<hr>

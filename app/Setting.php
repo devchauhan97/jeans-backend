@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 class Setting extends Model
 {
-      protected $guard = "admins";
+    protected $guard = "admins";
   
 	protected $table = 'settings';
 
@@ -14,4 +14,5 @@ class Setting extends Model
 
 	//use user id of admin
 	protected $primaryKey = 'id';
+
 }

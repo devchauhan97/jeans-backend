@@ -31,7 +31,7 @@ class CreateProductsTable extends Migration
             $table->integer('products_liked')->default('0');
             $table->integer('low_limit')->nullable();
             $table->string('products_slug')->nullable();
-            $table->tinyInteger('is_feature')->default('0');
+            $table->tinyInteger('is_feature')->nullable();
             $table->timestamps();
         });
     }

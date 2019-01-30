@@ -79,7 +79,7 @@
                                             	{{ trans('labels.InActive') }}
                                             </span>
                                         @else
-                                       	    <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
+                                       	    <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
                                             	{{ trans('labels.InActive') }}
                                             </a>
                                         @endif
@@ -89,7 +89,7 @@
                                             	{{ trans('labels.Active') }}
                                             </span>
                                         @else
-                                            <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
+                                            <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
                                                 {{ trans('labels.Active') }}
                                             </a>
                                         @endif
@@ -106,7 +106,7 @@
                                             	{{ trans('labels.InActive') }} 
                                             </span>
                                         @else
-                                       	    <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
+                                       	    <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
                                             	{{ trans('labels.InActive') }} 
                                             </a>
                                         @endif
@@ -116,7 +116,7 @@
                                             	{{ trans('labels.Active') }} 
                                             </span>
                                         @else
-                                            <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
+                                            <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
                                                 {{ trans('labels.Active') }} 
                                             </a>
                                         @endif
@@ -132,7 +132,7 @@
                                             	{{ trans('labels.InActive') }}
                                             </span>
                                         @else
-                                       	    <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
+                                       	    <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
                                             	{{ trans('labels.InActive') }}
                                             </a>
                                         @endif
@@ -142,7 +142,7 @@
                                             	{{ trans('labels.Active') }}
                                             </span>
                                         @else
-                                            <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
+                                            <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
                                                {{ trans('labels.Active') }} 
                                             </a>
                                         @endif
@@ -158,7 +158,7 @@
                                             	{{ trans('labels.InActive') }}
                                             </span>
                                         @else
-                                       	    <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
+                                       	    <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=no" class="method-status">
                                             	{{ trans('labels.InActive') }}
                                             </a>
                                         @endif
@@ -168,7 +168,7 @@
                                             	{{ trans('labels.Active') }}
                                             </span>
                                         @else
-                                            <a href="{{ URL::to("admin/shippingMethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
+                                            <a href="{{ URL::to("admin/shippingmethods")}}?id={{ $shipping_methods->shipping_methods_id}}&active=yes" class="method-status">
                                                {{ trans('labels.Active') }} 
                                             </a>
                                         @endif

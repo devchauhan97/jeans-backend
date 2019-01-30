@@ -50,7 +50,7 @@
                       <th>{{ trans('labels.Title') }}</th>
                       <th>{{ trans('labels.Image') }}</th>
                       <th>{{ trans('labels.AddedModifiedDate') }}</th>
-                      <th>{{ trans('labels.languages') }}</th>
+                <!--       <th>{{ trans('labels.languages') }}</th> -->
                       <th>{{ trans('labels.Action') }}</th>
                     </tr>
                   </thead>
@@ -65,7 +65,7 @@
                             <strong>{{ trans('labels.ModifiedDate') }}: </strong>@if(!empty($sliders->date_status_change)) {{ date('d M, Y', strtotime($sliders->date_status_change)) }}  @endif<br>
                             <strong>{{ trans('labels.ExpiryDate') }}: </strong>@if(!empty($sliders->expires_date)) {{ date('d M, Y', strtotime($sliders->expires_date)) }}  @endif</td>
                             
-                            <td>{{ $sliders->name }}</td>
+                            <!-- <td>{{ $sliders->name }}</td> -->
                             <td><a data-toggle="tooltip" data-placement="bottom" title="{{ trans('labels.Edit') }}" href="editslide/{{ $sliders->sliders_id }}" class="badge bg-light-blue"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
                             
                             <a data-toggle="tooltip" data-placement="bottom" title="{{ trans('labels.Delete') }}" id="deleteSliderId" sliders_id ="{{ $sliders->sliders_id }}" class="badge bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>

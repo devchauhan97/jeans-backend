@@ -63,7 +63,8 @@
 	<div class="form-group">
 	  <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.PricePrefix') }}</label>
 	  <div class="col-sm-10 col-md-8">
-		 {!! Form::text('price_prefix',  $result['products_attributes'][0]->price_prefix , array('class'=>'form-control', 'id'=>'price_prefix')) !!}
+	  	{!! Form::select('price_prefix',  ['+'=>'+','-'=>'-'],$result['products_attributes'][0]->price_prefix, ['class'=>'form-control', 'id'=>'price_prefix']) !!}
+		  
          <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.PricePrefixText') }}</span>
 							 
 	  </div>
@@ -76,6 +77,15 @@
          <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.NumericValueError') }}</span>
 	  </div>
 	</div>
+	<div class="form-group">
+    <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Image') }}</label>
+    <div class="col-sm-10 col-md-8">
+      {!! Form::file('newImage', array('id'=>'newImage')) !!}
+    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UploadAdditionalImageText') }}</span>
+    <br>
+      <img src=" " alt="" width=" 100px">
+    </div>
+  </div>
 	<div class="alert alert-danger addError" style="display: none; margin-bottom: 0;" role="alert"><i class="icon fa fa-ban"></i>{{ trans('labels.OpitonExistText') }} </div>
     
 </div>

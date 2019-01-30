@@ -45,7 +45,7 @@
                              @endforeach
                           @endif
                         
-                            {!! Form::open(array('url' =>'admin/addnewproduct', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
+                            {!! Form::open(array('url' =>'admin/add/new/product', 'method'=>'post', 'class' => 'form-horizontal form-validate', 'enctype'=>'multipart/form-data')) !!}
                             
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Category') }}</label>
@@ -73,7 +73,7 @@
                                   </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Manufacturers') }} </label>
                                   <div class="col-sm-10 col-md-4">
                                       <select class="form-control" name="manufacturers_id">
@@ -84,7 +84,7 @@
                                       </select><span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                       {{ trans('labels.ChooseManufacturerText') }}.</span>
                                   </div>
-                                </div>
+                                </div> -->
                                 <hr>
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Special') }}</label>
@@ -263,7 +263,12 @@
                                       {{ trans('labels.SelectStatus') }}</span>
                                   </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.feature') }} </label>
+                                  <div class="col-sm-10 col-md-4">
+                                     <input type="checkbox" class="change_is_feature" name="is_feature" value="" >
+                                   </div>
+                               </div>
                               <!-- /.box-body -->
                               <div class="box-footer text-center">
                                 <button type="submit" class="btn btn-primary">{{ trans('labels.AddProduct') }}</button>

@@ -24,60 +24,67 @@ use Auth;
 //use Illuminate\Foundation\Auth\ThrottlesLogins;
 //use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Category;
+use App\Language;
+use App\Setting;
 //for requesting a value 
 use Illuminate\Http\Request;
 //use Illuminate\Routing\Controller;
 
+
 class AdminCategoriesController extends Controller
 {
 	
-	public function getCategories($language_id){
+	public function getCategories($language_id)
+	{
 		
 		$language_id     =   $language_id;		
 		$listingCategories = DB::table('categories')
-		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
-		->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories.categories_slug as slug')
-		->where('categories_description.language_id','=', $language_id )->where('parent_id', '0')->get();
+									->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
+									->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories.categories_slug as slug')
+									->where('categories_description.language_id','=', $language_id )->where('parent_id', '0')->get();
 		return($listingCategories) ;
 	}
 	
-	public function getSubCategories($language_id){
+	public function getSubCategories($language_id)
+	{
 		
 		$language_id     =   $language_id;		
 		$listingCategories = DB::table('categories')
-		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
-		->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories.categories_slug as slug')
-		->where('categories_description.language_id','=', $language_id )->where('parent_id','>', '0')->get();
+								->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
+								->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories.categories_slug as slug')
+								->where('categories_description.language_id','=', $language_id )->where('parent_id','>', '0')->get();
 		return($listingCategories);
 	}
 	
-	public function categories(){
+	public function index()
+	{
 		$title = array('pageTitle' => Lang::get("labels.MainCategories"));
 		
 		$categories = DB::table('categories')
-		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
-		->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.categories_icon as icon',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories_description.language_id')
-		->where('parent_id', '0')->where('categories_description.language_id', '1')->paginate(10);
+						->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
+						->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.categories_icon as icon',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name', 'categories_description.language_id')
+						->where('parent_id', '0')->where('categories_description.language_id', '1')->paginate(10);
 		
 		return view("admin.categories",$title)->with('categories', $categories);
 	}
 	
 	//add category
-	public function addcategory(Request $request){
+	public function addCategory(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.AddCategories"));
 		
 		$result = array();
 		$result['message'] = array();
-		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$result['languages'] = $myVar->getLanguages();
-		
+		//$myVar = new AdminSiteSettingController();
+		$result['languages'] = Language::get();
+
 		return view("admin.addcategory",$title)->with('result', $result);
 	}
 	
 	//addNewCategory	
-	public function addnewcategory(Request $request){
+	public function createCategory(Request $request)
+	{
 		
 		$title = array('pageTitle' => Lang::get("labels.AddCategories"));
 		
@@ -85,55 +92,67 @@ class AdminCategoriesController extends Controller
 		$date_added	= date('y-m-d h:i:s');
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();		
+		//$myVar = new AdminSiteSettingController();
+		$languages = Language::get();		
+		$extensions = imageType();		
 		
-		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
+		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)) {
+
 			$image = $request->newImage;
 			$fileName = time().'.'.$image->getClientOriginalName();
 			$image->move(storage_path('app/public').'/category_images/', $fileName);
 			$uploadImage = 'category_images/'.$fileName;
-			storeImage($uploadImage); 
-		}	else{
+			storeImage($uploadImage);
+
+		}	else {
+
 			$uploadImage = '';
+
 		}	
 		
 		if($request->hasFile('newIcon') and in_array($request->newIcon->extension(), $extensions)){
+
 			$icon = $request->newIcon;
 			$iconName = time().'.'.$icon->getClientOriginalName();
 			$icon->move(storage_path('app/public').'/category_icons/', $iconName);
 			$uploadIcon = 'category_icons/'.$iconName; 
 			storeImage($uploadIcon);
-		}	else{
+
+		}	else {
+
 			$uploadIcon = '';
+
 		}	
 		
-		$categories_id = DB::table('categories')->insertGetId([
-					'categories_image'   =>   $uploadImage,
-					'date_added'		 =>   $date_added,
-					'parent_id'		 	 =>   '0',
-					'categories_icon'	 =>	  $uploadIcon
-					]);
-					
+		$categories_id = Category::create([
+								'categories_image'   =>   $uploadImage,
+								'date_added'		 =>   $date_added,
+								'parent_id'		 	 =>   '0',
+								'categories_icon'	 =>	  $uploadIcon,
+								'categories_status'	 		 =>	  $request->categories_status
+								])->categories_id;
+
 		$slug_flag = false;
 		//multiple lanugauge with record 
-		foreach($languages as $languages_data){
-			$categoryName= 'categoryName_'.$languages_data->languages_id;
+		foreach($languages as $languages_data) {
+
+			$categoryName = 'categoryName_'.$languages_data->languages_id;
 
 			//slug
-			if($slug_flag==false){
-				$slug_flag=true;
+			if($slug_flag	== false) {
+
+				$slug_flag = true;
 				
 				$slug = $request->$categoryName;
 				$old_slug = $request->$categoryName;
 				
 				$slug_count = 0;
-				do{
-					if($slug_count==0){
-						$currentSlug = $myVar->slugify($slug);
-					}else{
-						$currentSlug = $myVar->slugify($old_slug.'-'.$slug_count);
+				do {
+
+					if($slug_count==0) {
+						$currentSlug = slugify($slug);
+					} else {
+						$currentSlug = slugify($old_slug.'-'.$slug_count);
 					}
 					$slug = $currentSlug;
 					//$checkSlug = DB::table('categories')->where('categories_slug',$currentSlug)->where('categories_id','!=',$request->id)->get();
@@ -141,6 +160,7 @@ class AdminCategoriesController extends Controller
 					$slug_count++;
 				}
 				while(count($checkSlug)>0);
+
 				DB::table('categories')->where('categories_id',$categories_id)->update([
 					'categories_slug'	 =>   $slug
 					]);
@@ -159,22 +179,24 @@ class AdminCategoriesController extends Controller
 	}
 	
 	//editCategory
-	public function editcategory(Request $request){		
+	public function editCategory(Request $request)
+	{	
+
 		$title = array('pageTitle' => Lang::get("labels.EditMainCategories"));
 		$result = array();		
 		$result['message'] = array();
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$result['languages'] = $myVar->getLanguages();
+		//$myVar = new AdminSiteSettingController();
+		$result['languages'] = Language::get();
 		
 		$editCategory = DB::table('categories')
-		->select('categories.categories_id as id', 'categories.categories_image as image', 'categories.categories_icon as icon',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories.categories_slug as slug')
+		->select('categories.categories_id as id', 'categories.categories_image as image', 'categories.categories_icon as icon',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories.categories_slug as slug', 'categories.categories_status as categories_status')
 		
-		->where('categories.categories_id', $request->id)->get();
+		->where('categories.categories_id', $request->id)->first();
 		
 		$description_data = array();		
-		foreach($result['languages'] as $languages_data){
+		foreach($result['languages'] as $languages_data) {
 			
 			$description = DB::table('categories_description')->where([
 					['language_id', '=', $languages_data->languages_id],
@@ -198,7 +220,8 @@ class AdminCategoriesController extends Controller
 	}
 	
 	//updateCategory
-	public function updatecategory(Request $request){
+	public function updateCategory(Request $request)
+	{
 		
 		$title = array('pageTitle' => Lang::get("labels.EditMainCategories"));
 		$last_modified 	=   date('y-m-d h:i:s');
@@ -206,9 +229,9 @@ class AdminCategoriesController extends Controller
 		$result = array();					
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		//$myVar = new AdminSiteSettingController();
+		$languages = Language::get();		
+		$extensions = imageType();
 		
 		//check slug
 		if($request->old_slug!=$request->slug ){
@@ -216,9 +239,9 @@ class AdminCategoriesController extends Controller
 			$slug_count = 0;
 			do{
 				if($slug_count==0){
-					$currentSlug = $myVar->slugify($request->slug);
+					$currentSlug = slugify($request->slug);
 				}else{
-					$currentSlug = $myVar->slugify($request->slug.'-'.$slug_count);
+					$currentSlug = slugify($request->slug.'-'.$slug_count);
 				}
 				$slug = $currentSlug;
 				$checkSlug = DB::table('categories')->where('categories_slug',$currentSlug)->where('categories_id','!=',$request->id)->get();
@@ -256,7 +279,8 @@ class AdminCategoriesController extends Controller
 			'categories_image'   =>   $uploadImage,
 			'last_modified'   	 =>   $last_modified,
 			'categories_icon'    =>   $uploadIcon,
-			'categories_slug'	 =>   $slug
+			'categories_slug'	 =>   $slug,
+			'categories_status'	 =>	  $request->categories_status
 			]);
 		
 		foreach($languages as $languages_data){
@@ -282,7 +306,8 @@ class AdminCategoriesController extends Controller
 	
 	
 	//delete category
-	public function deletecategory(Request $request){
+	public function deleteCategory(Request $request)
+	{
 		
 		
 		DB::table('categories')->where('categories_id', $request->id)->delete();
@@ -301,7 +326,8 @@ class AdminCategoriesController extends Controller
 	
 	
 	//sub categories
-	public function subcategories(){
+	public function subcategories()
+	{
 		$title = array('pageTitle' => Lang::get("labels.SubCategories"));
 		
 		$listingSubCategories = DB::table('categories as subCategories')
@@ -326,14 +352,15 @@ class AdminCategoriesController extends Controller
 	}
 	
 	//addsubcategory
-	public function addsubcategory(Request $request){		
+	public function addSubCategory(Request $request)
+	{		
 		$title = array('pageTitle' => Lang::get("labels.AddSubCategories"));
 		$result = array();
 		$result['message'] = array();
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$result['languages'] = $myVar->getLanguages();
+		//$myVar = new AdminSiteSettingController();
+		$result['languages'] = Language::get();
 		
 		$categories = DB::table('categories')
 		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
@@ -346,64 +373,74 @@ class AdminCategoriesController extends Controller
 	
 	
 	//addNewsubcategory
-	public function addnewsubcategory(Request $request){
+	public function createSubCategory(Request $request)
+	{
 		
 		$title = array('pageTitle' => Lang::get("labels.AddSubCategories"));
 		$date_added	= date('y-m-d h:i:s');
 		$result = array();
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		//$myVar = new AdminSiteSettingController();
+		$languages = Language::get();		
+		$extensions = imageType();
 		
 		$categoryName = $request->categoryName;
 		$parent_id = $request->parent_id;
 		
-		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
+		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)) {
+
 			$image = $request->newImage;
 			$fileName = time().'.'.$image->getClientOriginalName();
 			$image->move(storage_path('app/public').'/category_images/', $fileName);
 			$uploadImage = 'category_images/'.$fileName; 
 			storeImage($uploadImage);
-		}else{
+
+		} else {
+
 			$uploadImage = '';
 		}
 		
-		if($request->hasFile('newIcon') and in_array($request->newIcon->extension(), $extensions)){
+		if($request->hasFile('newIcon') and in_array($request->newIcon->extension(), $extensions)) {
+
 			$icon = $request->newIcon;
 			$iconName = time().'.'.$icon->getClientOriginalName();
 			$icon->move(storage_path('app/public').'/category_icons/', $iconName);
 			$uploadIcon = 'category_icons/'.$iconName;
 			storeImage($uploadIcon); 
+
 		}	else{
+
 			$uploadIcon = '';
+
 		}		
 		
-		$categories_id = DB::table('categories')->insertGetId([
+		$categories_id = Category::create([
 					'categories_image'   =>   $uploadImage,
 					'date_added'		 =>   $date_added,
 					'parent_id'		 	 =>   $parent_id,
 					'categories_icon'	 =>	  $uploadIcon
-					]);
+					])->categories_id;
 		
 		$slug_flag = false;			
 		//multiple lanugauge with record 
-		foreach($languages as $languages_data){
+		foreach($languages as $languages_data) {
+
 			$categoryName= 'categoryName_'.$languages_data->languages_id;
 			
 			//slug
-			if($slug_flag==false){
-				$slug_flag=true;
+			if($slug_flag == false) {
+
+				$slug_flag = true;
 				
 				$slug = $request->$categoryName;
 				$old_slug = $request->$categoryName;
 				$slug_count = 0;
-				do{
-					if($slug_count==0){
-						$currentSlug = $myVar->slugify($old_slug);
-					}else{
-						$currentSlug = $myVar->slugify($old_slug.'-'.$slug_count);
+				do {
+					if($slug_count==0) {
+						$currentSlug = slugify($old_slug);
+					} else {
+						$currentSlug = slugify($old_slug.'-'.$slug_count);
 					}
 					$slug = $currentSlug;
 					$checkSlug = DB::table('categories')->where('categories_slug',$currentSlug)->get();
@@ -434,18 +471,17 @@ class AdminCategoriesController extends Controller
 				
 		return redirect()->back()->withErrors([$message]);
 	}
-	
-	
-	
-	public function editsubcategory(Request $request){
+
+	public function editSubCategory(Request $request) 
+	{
 		
 		$title = array('pageTitle' => Lang::get("labels.EditSubCategories"));
 		$result = array();
 		$result['message'] = array();
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$result['languages'] = $myVar->getLanguages();
+		//$myVar = new AdminSiteSettingController();
+		$result['languages'] = Language::get();
 		
 		$editSubCategory = DB::table('categories')
 		->select('categories.categories_id as id', 'categories.categories_image as image', 'categories.categories_icon as icon',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories.categories_slug as slug', 'categories.parent_id as parent_id')
@@ -485,7 +521,8 @@ class AdminCategoriesController extends Controller
 	
 	
 	//updatesubcategory
-	public function updatesubcategory(Request $request){
+	public function updateSubCategory(Request $request)
+	{
 		
 		$title = array('pageTitle' => Lang::get("labels.EditSubCategories"));
 		$result = array();
@@ -495,9 +532,9 @@ class AdminCategoriesController extends Controller
 		$categories_id = $request->id;
 		
 		//get function from other controller
-		$myVar = new AdminSiteSettingController();
-		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		//$myVar = new AdminSiteSettingController();
+		$languages = Language::get();		
+		$extensions = imageType();
 				
 		//check slug
 		if($request->old_slug!=$request->slug){
@@ -506,9 +543,9 @@ class AdminCategoriesController extends Controller
 			$slug_count = 0;
 			do{
 				if($slug_count==0){
-					$currentSlug = $myVar->slugify($request->slug);
+					$currentSlug = slugify($request->slug);
 				}else{
-					$currentSlug = $myVar->slugify($request->slug.'-'.$slug_count);
+					$currentSlug = slugify($request->slug.'-'.$slug_count);
 				}
 				$slug = $currentSlug;
 				$checkSlug = DB::table('categories')->where('categories_slug',$currentSlug)->where('categories_id','!=',$request->id)->get();
@@ -551,7 +588,8 @@ class AdminCategoriesController extends Controller
 			'categories_slug'    =>   $slug,
 		]);
 		
-		foreach($languages as $languages_data){
+		foreach($languages as $languages_data) {
+
 			$categories_name = 'category_name_'.$languages_data->languages_id;
 			
 			$checkExist = DB::table('categories_description')->where('categories_id','=',$categories_id)->where('language_id','=',$languages_data->languages_id)->get();			
@@ -559,7 +597,7 @@ class AdminCategoriesController extends Controller
 				DB::table('categories_description')->where('categories_id','=',$categories_id)->where('language_id','=',$languages_data->languages_id)->update([
 					'categories_name'  	    		 =>   $request->$categories_name,
 					]);
-			}else{
+			} else {
 				DB::table('categories_description')->insert([
 					'categories_name'  	     =>   $request->$categories_name,
 					'language_id'			 =>   $languages_data->languages_id,
@@ -569,33 +607,42 @@ class AdminCategoriesController extends Controller
 		}
 		
 		$message = Lang::get("labels.SubCategorieUpdateMessage");
+
 		return redirect()->back()->withErrors([$message]);
 		
 	}
-	
 	//delete sub category
-	public function deletesubcategory(Request $request){
+	public function deleteSubCategory(Request $request)
+	{
 		
 		DB::table('categories')->where('categories_id', $request->id)->delete();
 		DB::table('categories_description')->where('categories_id', $request->id)->delete();
 		
 		$message = Lang::get("labels.SubCategorieDeleteMessage");
+
 		return redirect()->back()->withErrors([$message]);
+
 	}
 	
-	public function getajaxcategories(Request $request){
+	public function getAjaxCategories(Request $request)
+	{
+
 		$language_id 	 = '1';
 		
-		if(empty($request->category_id)){
+		if(empty($request->category_id))
+		{
 			$category_id	= '0';
-		}else{
+
+		} else {
+
 			$category_id	=   $request->category_id;
 		}
 		
 		$getCategories = DB::table('categories')
-		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
-		->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name')
-		->where('parent_id', $category_id)->where('categories_description.language_id', $language_id)->get();
+							->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
+							->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name')
+							->where('parent_id', $category_id)->where('categories_description.language_id', $language_id)->get();
+
 		return($getCategories) ;
 	}
 }

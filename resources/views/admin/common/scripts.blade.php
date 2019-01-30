@@ -44,7 +44,9 @@
 <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{!! asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}"></script>
+<script src="{!! asset('admin/plugins/notify/bootstrap-notify.min.js') !!}"></script>
 
+<script src="{{asset('admin/plugins/checkbox/bootstrap-checkbox.js')}}"></script>
 <!-- Page script -->
 
 <?php
@@ -110,24 +112,25 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 	
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+		
 	$(function () {
-	
+
 		//Initialize Select2 Elements
 		$(".select2").select2();
-	
+
 		//Datemask dd/mm/yyyy
 		$("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 		//Datemask2 mm/dd/yyyy
 		$("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
 		//Money Euro
 		$("[data-mask]").inputmask();
-	
+
 		//Date range picker
 		$('.reservation').daterangepicker();
 		//Date range picker with time picker
@@ -150,12 +153,12 @@ $.ajaxSetup({
 			  $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 			}
 		);*/
-	
+
 		//Date picker
 		$('#datepicker').datepicker({
 		  autoclose: true
 		});
-	
+
 		//iCheck for checkbox and radio inputs
 		$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
 		  checkboxClass: 'icheckbox_minimal-blue',
@@ -171,30 +174,41 @@ $.ajaxSetup({
 		  checkboxClass: 'icheckbox_flat-green',
 		  radioClass: 'iradio_flat-green'
 		});
-	
+
 		//Colorpicker
 		$(".my-colorpicker1").colorpicker();
 		//color picker with addon
 		$(".my-colorpicker2").colorpicker();
-	
+
 		//Timepicker
 		$(".timepicker").timepicker({
 		  showInputs: false
 		});
-	  });
+	});
 
 
-$(document).on('click', '.checkboxess', function(e){
-      checked = $("input[type=checkbox]:checked.checkboxess").length;
-		if(!checked) {
-        //alert("You must check at least one checkbox.");
-        return false;
-      }
+	$(document).on('click', '.checkboxess', function(e){
+	      checked = $("input[type=checkbox]:checked.checkboxess").length;
+			if(!checked) {
+	        //alert("You must check at least one checkbox.");
+	        return false;
+	      }
 
-});
+	});
+
 
 $(document).ready(function(e) {
-		
+	/**yes no fetuser box*/
+	$( document ).on( "change", "#free_shipping", function () {
+		if($(this).is(':checked'))  {
+	    	$('#coupon_amount').attr('disabled',true)
+	    	$('#coupon_amount').val(0)
+		}else{
+			 $('#coupon_amount').attr('disabled',false) 
+		}
+	});
+	$(':checkbox').checkboxpicker();
+
 	//brantree_active
 	$(document).on('click', '#brantree_active', function(){
 		//has-error
@@ -261,259 +275,329 @@ $(document).ready(function(e) {
 
 	
 //ajax call for add option value
-$(document).on('click', '.add-value', function(e){
-	$("#loader").show();
-	var parentFrom = $(this).parent('.addvalue-form');
-	var language_id = parentFrom.children('#language_id').val();
-	var products_options_id = parentFrom.children('#products_options_id').val();
-	var formData = parentFrom.serialize();
-	$.ajax({
-		url: '{{ URL::to("admin/addattributevalue")}}',
-		type: "POST",
-		data: formData,
-		success: function (res) {
-				$('.addError').hide();
-				$('#addAttributeModal').modal('hide');
-				$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
-		},
+	$(document).on('click', '.add-value', function(e){
+		$("#loader").show();
+		var parentFrom = $(this).parent('.addvalue-form');
+		var language_id = parentFrom.children('#language_id').val();
+		var products_options_id = parentFrom.children('#products_options_id').val();
+		var formData = parentFrom.serialize();
+		$.ajax({
+			url: '{{ URL::to("admin/addattributevalue")}}',
+			type: "POST",
+			data: formData,
+			success: function (res) {
+					$('.addError').hide();
+					$('#addAttributeModal').modal('hide');
+					$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
+			},
+		});
+			
 	});
-		
-});
+	$('.change_is_feature').checkboxpicker().on('change', function() {
+
+		$(this).val($(this).is(":checked") ? 1:0 );
+
+	});
+	$('.is_feature').checkboxpicker().on('change', function() {
+
+	 	var products_id = $(this).val();
+	 	 
+	 	$.ajax({
+			url: '{{ URL::to("admin/product/feature")}}',
+			type: "POST",
+			data: {products_id:products_id},
+			success: function (res) {
+
+				$.notify({
+					// options
+					message: res.message 
+				},{
+					// settings
+					type: 'success'
+				}); 
+			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				$.notify({
+					// options
+					message: error 
+				},{
+					// settings
+					type: 'success'
+				}); 
+			},
+		});
+	});
+ 
+
 
 //ajax call for add option value
-$(document).on('click', '.update-value', function(e){
-	$("#loader").show();
-	var parentFrom = $(this).parent('.editvalue-form');
-	var language_id = parentFrom.children('#language_id').val();
-	var products_options_id = parentFrom.children('#products_options_id').val();
-	var formData = parentFrom.serialize();
-	console.log('language_id: '+language_id);
-	console.log('products_options_id: '+products_options_id);
-	$.ajax({
-		url: '{{ URL::to("admin/updateattributevalue")}}',
-		type: "POST",
-		data: formData,
-		success: function (res) {
-				$('.addError').hide();
-				
-				$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
-		},
+	$(document).on('click', '.update-value', function(e){
+		$("#loader").show();
+		var parentFrom = $(this).parent('.editvalue-form');
+		var language_id = parentFrom.children('#language_id').val();
+		var products_options_id = parentFrom.children('#products_options_id').val();
+		var formData = parentFrom.serialize();
+		console.log('language_id: '+language_id);
+		console.log('products_options_id: '+products_options_id);
+		$.ajax({
+			url: '{{ URL::to("admin/updateattributevalue")}}',
+			type: "POST",
+			data: formData,
+			success: function (res) {
+					$('.addError').hide();
+					
+					$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
+			},
+		});
+			
 	});
-		
-});
 
 
 //deleteattribute
-$(document).on('click', '#deleteAttribute', function(e){
-	$("#loader").show();
-	var parentFrom = $('#deleteValue');
-	var language_id = parentFrom.children('#delete_language_id').val();
-	var products_options_id = parentFrom.children('#delete_products_options_id').val();
-	var formData = parentFrom.serialize();
-	$.ajax({
-		url: '{{ URL::to("admin/deletevalue")}}',
-		type: "POST",
-		data: formData,
-		success: function (res) {
-				$('.addError').hide();
+	$(document).on('click', '#deleteAttribute', function(e){
+		$("#loader").show();
+		var parentFrom = $('#deleteValue');
+		var language_id = parentFrom.children('#delete_language_id').val();
+		var products_options_id = parentFrom.children('#delete_products_options_id').val();
+		var formData = parentFrom.serialize();
+		$.ajax({
+			url: '{{ URL::to("admin/deletevalue")}}',
+			type: "POST",
+			data: formData,
+			success: function (res) {
+					$('.addError').hide();
+					
+					$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
+					$('#deleteValueModal').modal('hide');
+			},
+		});
+			
+	});
+
+//ajax call for submit value
+	$(document).on('click', '#addAttribute', function(e){
+		$("#loader").show();
+		//var formData = $('#addattributefrom').serialize();
+		var formData = new FormData($('#addattributefrom')[0])
+		$.ajax({
+			url: '{{ URL::to("admin/addnewproductattribute")}}',
+			type: "POST",
+			data: formData,
+			processData: false,
+	        contentType: false,
+	        cache: false,
+	        timeout: 600000,
+			success: function (res) {
 				
-				$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
-				$('#deleteValueModal').modal('hide');
-		},
-	});
-		
-});
+				if(res.length != '') {
+					
+					$('.addError').hide();
+					$('#addAttributeModal').modal('hide');
+					var i;
+					var showData = [];
+					for (i = 0; i < res.length; ++i) {
+						var j = i + 1; 
+						showData[i] = "<tr><td>"+j+"</td><td>"+res[i].products_options_name+"</td><td>"+res[i].products_options_values_name+"</td><td>"+res[i].price_prefix+" "+res[i].options_values_price+"</td><td>    <a class='badge bg-light-blue editproductattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"'  language_id = '"+res[i].language_id+"' options_id= '"+res[i].options_id+"'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a> <a class='badge bg-red deleteproductattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' ><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
 
-//ajax call for submit value
-$(document).on('click', '#addAttribute', function(e){
-	$("#loader").show();
-	var formData = $('#addattributefrom').serialize();
-	$.ajax({
-		url: '{{ URL::to("admin/addnewproductattribute")}}',
-		type: "POST",
-		data: formData,
-		success: function (res) {
-			
-			if(res.length != ''){
-				$('.addError').hide();
-				$('#addAttributeModal').modal('hide');
-				var i;
-				var showData = [];
-				for (i = 0; i < res.length; ++i) {
-					var j = i + 1; 
-					showData[i] = "<tr><td>"+j+"</td><td>"+res[i].products_options_name+"</td><td>"+res[i].products_options_values_name+"</td><td>"+res[i].price_prefix+" "+res[i].options_values_price+"</td><td>    <a class='badge bg-light-blue editproductattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"'  language_id = '"+res[i].language_id+"' options_id= '"+res[i].options_id+"'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a> <a class='badge bg-red deleteproductattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' ><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
-
+					}
+					$(".contentAttribute").html(showData);
+				}else{
+					$('.addError').show();
 				}
-				$(".contentAttribute").html(showData);
-			}else{
-				$('.addError').show();
-			}
+				
+				
+			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				console.log(res.responseJSON)
+				jQuery('.alert-danger').html('');
+				$.each(res.responseJSON, function(key, value){
+		  			jQuery('.alert-danger').show();
+		  			jQuery('.alert-danger').append('<p>'+value+'</p>');
+		  		});	
+			},
+		});
 			
 			
-		},
 	});
-		
-		
-});
 
 
 //ajax call for submit value
-$(document).on('click', '#addDefaultAttribute', function(e){
-	$("#loader").show();
-	var formData = $('#adddefaultattributefrom').serialize();
-	$.ajax({
-		url: '{{ URL::to("admin/addnewdefaultattribute")}}',
-		type: "POST",
-		data: formData,
-		success: function (res) {
-			
-			if(res.length != ''){
-				$('.addError').hide();
-				$('#adddefaultattributesmodal').modal('hide');
-				var i;
-				var showData = [];
-				for (i = 0; i < res.length; ++i) {
-					var j = i + 1;
-					showData[i] = "<tr><td>"+j+"</td><td>"+res[i].products_options_name+"</td><td>"+res[i].products_options_values_name+"</td><td><a class='badge bg-light-blue editdefaultattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' language_id ='"+res[i].language_id+"' options_id ='"+res[i].options_id+"'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a> <a class='badge bg-red deletedefaultattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' ><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
+	$(document).on('click', '#addDefaultAttribute', function(e){
+		$("#loader").show();
+		//var formData = $('#adddefaultattributefrom').serialize();
+		var formData = new FormData($('#adddefaultattributefrom')[0])
+		 
+		$.ajax({
+			url: '{{ URL::to("admin/add/new/default/attribute")}}',
+			type: "POST",
+			data: formData,
+			processData: false,
+	        contentType: false,
+	        cache: false,
+	        timeout: 600000,
+			success: function (res) {
+				
+				if(res.length != ''){
+					$('.addError').hide();
+					$('#adddefaultattributesmodal').modal('hide');
+					var i;
+					var showData = [];
+					
+					for (i = 0; i < res.length; ++i) {
+						var j = i + 1;
+						showData[i] = "<tr><td>"+j+"</td><td>"+res[i].products_options_name+"</td><td>"+res[i].products_options_values_name+"</td><td><a class='badge bg-light-blue editdefaultattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' language_id ='"+res[i].language_id+"' options_id ='"+res[i].options_id+"'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a> <a class='badge bg-red deletedefaultattributemodal' products_attributes_id = '"+res[i].products_attributes_id+"' products_id = '"+res[i].products_id+"' ><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
 
+					}
+					$(".contentDefaultAttribute").html(showData);
+				} else {
+
+					$('.addDefaultError').show();
 				}
-				$(".contentDefaultAttribute").html(showData);
-			}else{
-				$('.addDefaultError').show();
-			}
+				
+				
+			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				console.log(res.responseJSON)
+				jQuery('.alert-danger').html('');
+				$.each(res.responseJSON, function(key, value){
+		  			jQuery('.alert-danger').show();
+		  			jQuery('.alert-danger').append('<p>'+value+'</p>');
+		  		});	
+			},
+
+		});
 			
 			
-		},
 	});
-		
-		
-});
 
 //onchange get zones agains country
-$(document).on('change', '#entry_country_id', function(e){
-		
-	var zone_country_id = $(this).val();
-	$.ajax({
-	  url: "{{ URL::to('admin/getZones')}}",
-	  dataType: 'json',
-	  type: "post",
-	  data: '&zone_country_id='+zone_country_id,
-	  success: function(data){
-		if(data.data.length>0){
-			var i;
-			var showData = [];
-			for (i = 0; i < data.data.length; ++i) {
-				showData[i] = "<option value='"+data.data[i].zone_id+"'>"+data.data[i].zone_name+"</option>"; 
-			}
-		}else{
-			showData = "<option value=''>Select Zone</option>"; 				
-		}
-			$(".zoneContent").html(showData);
-	  }
-	});
-	
-});
-
-//ajax call for submit value
-$(document).on('click', '#addAddress', function(e){
-	$("#loader").show();
-	var formData = $('#addAddressFrom').serialize();
-	if(!$('#entry_firstname').val())
-		alert('Please enter first name')
-	if(!$('#entry_street_address').val())
-		alert('Please enter  street address')
-	if(!$('#entry_postcode').val())
-		alert('Please enter  postcode')
-	if(!$('#entry_city').val())
-		alert('Please enter   city')
-	if(!$('#entry_state').val())
-		alert('Please enter   state')
-	if(!$('#entry_country_id').val())
-		alert('Please enter country ')
-	if(!$('#entry_zone_id').val())
-		alert('Please select  zone')
-
-	$.ajax({
-		url: '{{ URL::to("admin/addNewCustomerAddress")}}',
-		type: "POST",
-		data: formData,
-		async: false,
-		success: function (res) {
+	$(document).on('change', '#entry_country_id', function(e){
 			
-			if(res.length != ''){
-				$('#addAdressModal').modal('hide');
+		var zone_country_id = $(this).val();
+		$.ajax({
+		  url: "{{ URL::to('admin/getZones')}}",
+		  dataType: 'json',
+		  type: "post",
+		  data: '&zone_country_id='+zone_country_id,
+		  success: function(data){
+			if(data.data.length>0){
 				var i;
 				var showData = [];
-				for (i = 0; i < res.length; ++i) {
-					var j = i + 1;
-					
-					showData[i] = "<tr><td>"+j+"</td><td><strong>Company:</strong> "+res[i].entry_company+"<br><strong>First Name:</strong> "+res[i].entry_firstname+"<br><strong>Last Name:</strong> "+res[i].entry_lastname+"</td><td><strong>Street:</strong> "+res[i].entry_street_address+"<br><strong>Suburb:</strong> "+res[i].entry_suburb+"<br><strong>Postcode:</strong> "+res[i].entry_postcode+"<br><strong>City:</strong> "+res[i].entry_city+"<br><strong>State:</strong> "+res[i].entry_state+"<br><strong>Zone:</strong> "+res[i].zone_name+"<br><strong>Country:</strong> "+res[i].countries_name+"</td><td><a class='badge bg-light-blue editAddressModal' customers_id = '"+res[i].customers_id+"' address_book_id = '"+res[i].address_book_id+"' ><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a><a customers_id = '"+res[i].customers_id+"' address_book_id = '"+res[i].address_book_id+"' class='badge bg-red deleteAddressModal'><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
-
+				for (i = 0; i < data.data.length; ++i) {
+					showData[i] = "<option value='"+data.data[i].zone_id+"'>"+data.data[i].zone_name+"</option>"; 
 				}
-				$(".contentAttribute").html(showData);
 			}else{
-				
+				showData = "<option value=''>Select Zone</option>"; 				
 			}
-		},
+				$(".zoneContent").html(showData);
+		  }
+		});
+		
 	});
-});
+
+//ajax call for submit value
+	$(document).on('click', '#addAddress', function(e){
+		$("#loader").show();
+		var formData = $('#addAddressFrom').serialize();
+		if(!$('#entry_firstname').val())
+			alert('Please enter first name')
+		if(!$('#entry_street_address').val())
+			alert('Please enter  street address')
+		if(!$('#entry_postcode').val())
+			alert('Please enter  postcode')
+		if(!$('#entry_city').val())
+			alert('Please enter   city')
+		if(!$('#entry_state').val())
+			alert('Please enter   state')
+		if(!$('#entry_country_id').val())
+			alert('Please enter country ')
+		if(!$('#entry_zone_id').val())
+			alert('Please select  zone')
+
+		$.ajax({
+			url: '{{ URL::to("admin/addNewCustomerAddress")}}',
+			type: "POST",
+			data: formData,
+			async: false,
+			success: function (res) {
+				
+				if(res.length != ''){
+					$('#addAdressModal').modal('hide');
+					var i;
+					var showData = [];
+					for (i = 0; i < res.length; ++i) {
+						var j = i + 1;
+						
+						showData[i] = "<tr><td>"+j+"</td><td><strong>Company:</strong> "+res[i].entry_company+"<br><strong>First Name:</strong> "+res[i].entry_firstname+"<br><strong>Last Name:</strong> "+res[i].entry_lastname+"</td><td><strong>Street:</strong> "+res[i].entry_street_address+"<br><strong>Suburb:</strong> "+res[i].entry_suburb+"<br><strong>Postcode:</strong> "+res[i].entry_postcode+"<br><strong>City:</strong> "+res[i].entry_city+"<br><strong>State:</strong> "+res[i].entry_state+"<br><strong>Zone:</strong> "+res[i].zone_name+"<br><strong>Country:</strong> "+res[i].countries_name+"</td><td><a class='badge bg-light-blue editAddressModal' customers_id = '"+res[i].customers_id+"' address_book_id = '"+res[i].address_book_id+"' ><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a><a customers_id = '"+res[i].customers_id+"' address_book_id = '"+res[i].address_book_id+"' class='badge bg-red deleteAddressModal'><i class='fa fa-trash' aria-hidden='true'></i></a></td></tr>"; 
+
+					}
+					$(".contentAttribute").html(showData);
+				}else{
+					
+				}
+			},
+		});
+	});
 
 //editAddressModal
-$(document).on('click', '.editAddressModal', function(){
-	var customers_id = $(this).attr('customers_id');
-	var address_book_id = $(this).attr('address_book_id');
-	$.ajax({
-		url: "{{ URL::to('admin/editAddress')}}",
-		type: "POST",
-		data: '&customers_id='+customers_id+'&address_book_id='+address_book_id,
-		success: function (data) {
-			$('.editContent').html(data); 
-			$('#editAddressModal').modal('show');
-		},
-		dataType: 'html'
+	$(document).on('click', '.editAddressModal', function(){
+		var customers_id = $(this).attr('customers_id');
+		var address_book_id = $(this).attr('address_book_id');
+		$.ajax({
+			url: "{{ URL::to('admin/editAddress')}}",
+			type: "POST",
+			data: '&customers_id='+customers_id+'&address_book_id='+address_book_id,
+			success: function (data) {
+				$('.editContent').html(data); 
+				$('#editAddressModal').modal('show');
+			},
+			dataType: 'html'
+		});
 	});
-});
 	
 	
 		
 //editproductattributemodal
-$(document).on('click', '.editproductattributemodal', function(){
-	var products_id = $(this).attr('products_id');
-	var products_attributes_id = $(this).attr('products_attributes_id');
-	var language_id = $(this).attr('language_id');	
-	var options_id = $(this).attr('options_id');
-	$.ajax({
-		url: '{{ URL::to("admin/editproductattribute")}}',
-		type: "POST",
-		data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
-		success: function (data) {
-			$('.editContent').html(data); 
-			$('#editproductattributemodal').modal('show');
-		},
-		dataType: 'html'
+	$(document).on('click', '.editproductattributemodal', function(){
+		var products_id = $(this).attr('products_id');
+		var products_attributes_id = $(this).attr('products_attributes_id');
+		var language_id = $(this).attr('language_id');	
+		var options_id = $(this).attr('options_id');
+		$.ajax({
+			url: '{{ URL::to("admin/editproductattribute")}}',
+			type: "POST",
+			data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
+			success: function (data) {
+				$('.editContent').html(data); 
+				$('#editproductattributemodal').modal('show');
+			},
+			dataType: 'html'
+		});
 	});
-});
 
 //editdefaultattributemodal
-$(document).on('click', '.editdefaultattributemodal', function(){
-	var products_id = $(this).attr('products_id');
-	var products_attributes_id = $(this).attr('products_attributes_id');
-	var language_id = $(this).attr('language_id');
-	var options_id = $(this).attr('options_id');
-	$.ajax({
-		url: "{{ URL::to('admin/editdefaultattribute')}}",
-		type: "POST",
-		data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
-		success: function (data) {
-			$('.editDefaultContent').html(data); 
-			$('#editdefaultattributemodal').modal('show');
-		},
-		dataType: 'html'
+	$(document).on('click', '.editdefaultattributemodal', function(){
+		var products_id = $(this).attr('products_id');
+		var products_attributes_id = $(this).attr('products_attributes_id');
+		var language_id = $(this).attr('language_id');
+		var options_id = $(this).attr('options_id');
+		$.ajax({
+			url: "{{ URL::to('admin/editdefaultattribute')}}",
+			type: "POST",
+			data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
+			success: function (data) {
+				$('.editDefaultContent').html(data); 
+				$('#editdefaultattributemodal').modal('show');
+			},
+			dataType: 'html'
+		});
 	});
-});
 
 //udpate address
-$(document).on('click', '#updateAddress', function(e){
+	$(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = $('#editAddressFrom').serialize();
 		$.ajax({
@@ -538,22 +622,23 @@ $(document).on('click', '#updateAddress', function(e){
 				}else{
 					$('.addError').show();
 				}
-
-
 			},
 		});
 		
 	});
-	
-	
 		
 	$(document).on('click', '#updateProductAttribute', function(e){
 		$("#loader").show();
-		var formData = $('#editAttributeFrom').serialize();
+		//var formData = $('#editAttributeFrom').serialize();
+		var formData = new FormData($('#editAttributeFrom')[0])
 		$.ajax({
 			url: '{{ URL::to("admin/updateproductattribute")}}',
 			type: "POST",
 			data: formData,
+			processData: false,
+			contentType: false,
+	        cache: false,
+	        timeout: 600000,
 			success: function (res) {
 				
 				if(res.length != ''){
@@ -573,6 +658,15 @@ $(document).on('click', '#updateAddress', function(e){
 
 
 			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				console.log(res.responseJSON)
+				jQuery('.alert-danger').html('');
+				$.each(res.responseJSON, function(key, value){
+		  			jQuery('.alert-danger').show();
+		  			jQuery('.alert-danger').append('<p>'+value+'</p>');
+		  		});	
+			},
 		});
 		
 	});
@@ -580,11 +674,16 @@ $(document).on('click', '#updateAddress', function(e){
 	
 	$(document).on('click', '#updateDefaultAttribute', function(e){
 		$("#loader").show();
-		var formData = $('#editDefaultAttributeFrom').serialize();
+		///var formData = $('#editDefaultAttributeFrom').serialize();
+		var formData = new FormData($('#editDefaultAttributeFrom')[0])
 		$.ajax({
 			url: "{{ URL::to('admin/updatedefaultattribute')}}",
 			type: "POST",
 			data: formData,
+			processData: false,
+	        contentType: false,
+	        cache: false,
+	        timeout: 600000,
 			success: function (res) {
 				
 				if(res.length != ''){

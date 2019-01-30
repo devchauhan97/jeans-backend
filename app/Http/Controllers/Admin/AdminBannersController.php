@@ -80,7 +80,7 @@ class AdminBannersController extends Controller
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
-		$extensions = $myVar->imageType();	
+		$extensions = imageType();	
 		$setting = $myVar->getSetting();	
 		
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
@@ -148,7 +148,7 @@ class AdminBannersController extends Controller
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
-		$extensions = $myVar->imageType();	
+		$extensions = imageType();	
 		$setting = $myVar->getSetting();	
 		
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){

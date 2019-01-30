@@ -14,5 +14,7 @@ class Language extends Model
 	protected $guarded = ['languages_id'];
 
 	//use user id of admin
-	protected $primaryKey = 'languages_id'; 
+	protected $primaryKey = 'languages_id';
+
+	 
 }

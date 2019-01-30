@@ -170,6 +170,18 @@
           
 		  <p class="lead" style="margin-bottom:10px">{{ trans('labels.Orderinformation') }}:</p>
           <p class="text-muted well well-sm no-shadow" style="text-transform:capitalize; word-break:break-all;">
+             <?php
+              // $s=json_decode($data['orders_data'][0]->order_information);
+              
+              //  foreach($s as $key =>$value){ 
+              //     if($s[$key] == 'Paid')
+              //       echo 'p----------'.$key;
+              //     else
+              //       echo '----------'.$key;
+                     
+              //     }
+             
+             ?>
            @if(trim($data['orders_data'][0]->order_information) != '[]' or !empty($data['orders_data'][0]->order_information))
            		{{ $data['orders_data'][0]->order_information }}
            @endif

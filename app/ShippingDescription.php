@@ -12,4 +12,10 @@ class ShippingDescription extends Model
 
 	//use user id of admin
 	protected $primaryKey = 'id';  
+
+	public function shipping_method()
+	{
+
+		//return $this->hasOne(ShippingMethod::class,'products_id');
+	}
 }

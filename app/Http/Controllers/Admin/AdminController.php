@@ -32,46 +32,44 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-	public function dashboard(Request $request){
+	public function dashboard(Request $request)
+	{
 		$title 			  = 	array('pageTitle' => Lang::get("labels.title_dashboard"));
 		$language_id      = 	'1';
 		$result 		  =		array();
 		
 		$reportBase		  = 	$request->reportBase;
-		
 		//recently order placed
 		$orders = DB::table('orders')
 			->LeftJoin('currencies', 'currencies.code', '=', 'orders.currency')
 			->orderBy('date_purchased','DESC')
 			->get();
-		
-			
-		
 		$index = 0;
 		$total_price = array();
-		foreach($orders as $orders_data){
+		foreach($orders as $orders_data) {
+
 			$orders_products = DB::table('orders_products')
 				->select('final_price', DB::raw('SUM(final_price) as total_price'))
 				->where('orders_id', '=' ,$orders_data->orders_id)
 				->groupBy('final_price')
 				->get();
 				
-			$orders[$index]->total_price = $orders_products[0]->total_price;
+			$orders[$index]->total_price = @$orders_products[0]->total_price;
 			
 			$orders_status_history = DB::table('orders_status_history')
 				->LeftJoin('orders_status', 'orders_status.orders_status_id', '=', 'orders_status_history.orders_status_id')
 				->select('orders_status.orders_status_name', 'orders_status.orders_status_id')
 				->where('orders_id', '=', $orders_data->orders_id)->orderby('orders_status_history.date_added', 'DESC')->limit(1)->get();
 				
-			$orders[$index]->orders_status_id = $orders_status_history[0]->orders_status_id;
-			$orders[$index]->orders_status = $orders_status_history[0]->orders_status_name;
+			$orders[$index]->orders_status_id = @$orders_status_history[0]->orders_status_id;
+			$orders[$index]->orders_status = @$orders_status_history[0]->orders_status_name;
 			
 			$index++;				
 		}
 		
 		$compeleted_orders = 0;
 		$pending_orders = 0;
-		foreach($orders as $orders_data){
+		foreach($orders as $orders_data) {
 			
 			if($orders_data->orders_status_id=='2')
 			{
@@ -217,7 +215,7 @@ class AdminController extends Controller
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		if($request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)){
 			$image = $request->newImage;

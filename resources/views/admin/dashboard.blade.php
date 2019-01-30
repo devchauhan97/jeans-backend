@@ -255,7 +255,7 @@
                             @if(!empty($recentCustomers->customers_picture))
                                <img src="{{getFtpImage($recentCustomers->customers_picture)}}">
                             @else
-                               <img src="{{asset('').'/default_images/user.png' }}">
+                               <img src="{{asset('default_images/user.png') }}">
                             @endif
                           <a class="users-list-name" href="{{ URL::to('admin/editCustomers') }}/{{ $recentCustomers->customers_id }}">{{ $recentCustomers->customers_firstname }} {{ $recentCustomers->customers_lastname }}</a>
                           <span class="users-list-date">{{ date('d-M', strtotime($recentCustomers->customers_info_date_account_created)) }}</span>

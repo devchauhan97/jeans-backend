@@ -80,7 +80,7 @@ class AdminSlidersController extends Controller
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		$expiryDate = str_replace('/', '-', $request->expires_date);
 		$expiryDateFormate = date('Y-m-d H:i:s', strtotime($expiryDate));
@@ -154,7 +154,7 @@ class AdminSlidersController extends Controller
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
-		$extensions = $myVar->imageType();
+		$extensions = imageType();
 		
 		$expiryDate = str_replace('/', '-', $request->expires_date);
 		$expiryDateFormate = date('Y-m-d H:i:s', strtotime($expiryDate));

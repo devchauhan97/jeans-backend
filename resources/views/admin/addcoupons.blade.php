@@ -93,8 +93,8 @@
                                 	<select name="discount_type" class='form-control'>
                                     	<option value="fixed_cart" selected>Cart Discount</option>
                                         <option value="percent">Cart % Discount</option>
-                                        <option value="fixed_product">Product Discount</option>
-                                        <option value="percent_product">Product % Discount</option>
+                                        <!-- <option value="fixed_product">Product Discount</option>
+                                        <option value="percent_product">Product % Discount</option> -->
                                     </select>
                                 	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                 	{{ trans('labels.DiscounttypeText') }}</span>
@@ -105,7 +105,7 @@
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.CouponAmount') }} 
                                 </label>
 								<div class="col-sm-10 col-md-4">
-									{!! Form::text('amount',  '0', array('class'=>'form-control', 'id'=>'amount'))!!} 
+									{!! Form::text('amount',  '0', array('class'=>'form-control', 'id'=>'coupon_amount'))!!} 
                                 	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                 	{{ trans('labels.CouponAmountText') }}</span>
 								</div>
@@ -114,10 +114,11 @@
                             <div class="form-group">
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.AllowFreeShipping') }}</label>
 								<div class="col-sm-10 col-md-4" style="padding-top: 7px;">
+                   {!! Form::checkbox('free_shipping', 1, 0, ['id'=>'free_shipping']) !!}
                                     <label style="margin-bottom:0">
-                                      {!! Form::checkbox('free_shipping', 1, null, ['class' => 'minimal']) !!}
+                                      <!-- {!! Form::checkbox('free_shipping', 1, null, ['class' => 'minimal']) !!} -->
                                     </label>
-                                      &nbsp; {{ trans('labels.AllowFreeShippingText') }}
+                                    <!--   &nbsp; {{ trans('labels.AllowFreeShippingText') }} -->
                                       
 								</div>
 							</div>
@@ -230,21 +231,21 @@
 								</div>
 							</div>
                             
-                            <div class="form-group">
+              <div class="form-group">
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.UsageLimitPerCoupon') }} </label>
 								<div class="col-sm-10 col-md-4">
 									{!! Form::number('usage_limit',  '', array('class'=>'form-control', 'placeholder'=>trans('labels.Unlimited'), 'id'=>'usage_limit'))!!}
-                                	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UsageLimitPerCouponText') }}</span>
-                                </div>
+                  	<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UsageLimitPerCouponText') }}</span>
+                  </div>
 							</div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.UsageLimitPerUser') }}</label>
 								<div class="col-sm-10 col-md-4">
 									{!! Form::number('usage_limit_per_user',  '', array('class'=>'form-control', 'placeholder'=>trans('labels.Unlimited'), 'id'=>'usage_limit_per_user'))!!}
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UsageLimitPerUserText') }}</span>
                                 
 								</div>
-							</div>
+							</div> -->
                             						
 							<!-- /.box-body -->
 							<div class="box-footer text-center">

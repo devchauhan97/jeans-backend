@@ -20,6 +20,7 @@ class CreateCustomersInfoTable extends Migration
             $table->dateTime('customers_info_date_account_created')->nullable();
             $table->dateTime('customers_info_date_account_last_modified')->nullable();
             $table->integer('global_product_notifications')->nullable()->default('0');
+            $table->timestamps();
 
         }); 
     }

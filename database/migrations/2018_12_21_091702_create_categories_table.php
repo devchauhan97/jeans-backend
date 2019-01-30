@@ -22,6 +22,7 @@ class CreateCategoriesTable extends Migration
             $table->dateTime('date_added')->nullable();
             $table->dateTime('last_modified')->nullable();
             $table->string('categories_slug')->nullable();
+            $table->char('categories_status',4)->nullable();
             $table->timestamps();           
         });
     }

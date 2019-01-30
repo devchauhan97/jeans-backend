@@ -1228,6 +1228,7 @@ return [
 	'themes setting' => 'Themes Setting',
 	'slug'=>'Slug',
 	'slugText'=>'This will show in URL. It must be unique.',
+	'catStatusText'=>'This Categorie  will show  in menu of website.',
 	'instamojoName'=>'Instamojo Name',
 	'instamojo'=>'Instamojo',
 	'instamojoEnviroment'=>'Instamojo Enviroment',

@@ -101,7 +101,7 @@ class AdminNotificationController extends Controller
 		$pageResponse   =   0;
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
-		$extensions = $myVar->imageType();	
+		$extensions = imageType();	
 		$setting = $myVar->getSetting();		
 		
 		$dir = 'assets/images/notification_images/';		
@@ -159,7 +159,7 @@ class AdminNotificationController extends Controller
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();
-		$extensions = $myVar->imageType();	
+		$extensions = imageType();	
 		$setting = $myVar->getSetting();
 		
 		$dir = 'assets/images/notification_images/';	

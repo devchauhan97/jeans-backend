@@ -60,7 +60,20 @@
 	  </div>
 	</div>
 
+  <div class="form-group">
+    <label for="name" class="col-sm-2 col-md-4 control-label">{{ trans('labels.Image') }}</label>
+    <div class="col-sm-10 col-md-8">
+      {!! Form::file('newImage', array('id'=>'newImage')) !!}
+    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UploadAdditionalImageText') }}</span>
+    <br>
+      @foreach($result['products_attributes_image'] as $val)
+      <img src="{{getFtpImage($val->image)}}" alt="" width=" 100px">
+      @endforeach
+    </div>
+  </div>
+
 	<div class="alert alert-danger addError" style="display: none; margin-bottom: 0;" role="alert">{{ trans('labels.AddOptionValueText') }}. </div>
+
 
 </div>
 <div class="modal-footer">

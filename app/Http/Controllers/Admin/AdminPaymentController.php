@@ -144,9 +144,9 @@ class AdminPaymentController extends Controller
 				]);
 			
 		
-		$braintree_name = $request->braintree_name;
+		//$braintree_name = $request->braintree_name;
 		$stripe_name = $request->stripe_name;
-		$paypal_name = $request->paypal_name;
+		//$paypal_name = $request->paypal_name;
 		$cod_name = $request->cod_name;
 		
 		//get function from other controller
@@ -154,7 +154,7 @@ class AdminPaymentController extends Controller
 		$languages = $myVar->getLanguages();
 		
 		foreach($languages as $languages_data){
-			$braintreeName = 'briantree_name_'.$languages_data->languages_id;
+			/*$braintreeName = 'briantree_name_'.$languages_data->languages_id;
 			$sub_name_1 = 'sub_name_1_'.$languages_data->languages_id;
 			$sub_name_2 = 'sub_name_2_'.$languages_data->languages_id;
 			$checkExist = DB::table('payment_description')->where('payment_name','=',$braintree_name)->where('language_id','=',$languages_data->languages_id)->get();			
@@ -172,7 +172,7 @@ class AdminPaymentController extends Controller
 					'language_id'			 =>   $languages_data->languages_id,
 					'payment_name'			 =>   $braintree_name,
 					]);
-			}
+			}*/
 			
 			
 			$stripeName = 'stripe_name_'.$languages_data->languages_id;
@@ -189,7 +189,7 @@ class AdminPaymentController extends Controller
 					]);
 			}
 			
-			$paypalName = 'paypal_name_'.$languages_data->languages_id;			
+			/*$paypalName = 'paypal_name_'.$languages_data->languages_id;			
 			$checkExist = DB::table('payment_description')->where('payment_name','=',$paypal_name)->where('language_id','=',$languages_data->languages_id)->get();			
 			if(count($checkExist)>0){
 				DB::table('payment_description')->where('payment_name','=',$paypal_name)->where('language_id','=',$languages_data->languages_id)->update([
@@ -201,7 +201,7 @@ class AdminPaymentController extends Controller
 					'language_id'			 =>   $languages_data->languages_id,
 					'payment_name'			 =>   $paypal_name,
 					]);
-			}
+			}*/
 			
 			$codName = 'cod_name_'.$languages_data->languages_id;			
 			$checkExist = DB::table('payment_description')->where('payment_name','=',$cod_name)->where('language_id','=',$languages_data->languages_id)->get();			
