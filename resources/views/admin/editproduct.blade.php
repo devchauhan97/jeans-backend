@@ -327,7 +327,42 @@
                                   <div class="col-sm-10 col-md-4">
                                      <input type="checkbox" class="change_is_feature" name="is_feature" value="{{$result['product'][0]->is_feature}}"  {{$result['product'][0]->is_feature  ? 'checked':'' }}  >
                                    </div>
-                               </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="name"class="col-sm-2 col-md-3 control-label">{{ trans('labels.OptionName') }}       </label>
+                                  <div class="col-sm-10 col-md-4">
+                                    <select class="form-control edit-additional-option-id field-validate" name="products_options_id">       
+                                      <option selected disabled>Select Option</option>              
+                                     @foreach($result['options'] as $options)
+                                      <option
+                                            @if(@$result['products_attributes'][0]->options_id == $options->products_options_id)
+                                              selected
+                                            @endif
+                                              value="{{ $options->products_options_id }}">{{ $options->products_options_name }}</option>
+                                     @endforeach                     
+                                    </select>
+                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                              {{ trans('labels.AddOptionNameText') }}
+                                   </span>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.OptionValues') }}</label>
+                                <div class="col-sm-10 col-md-4">
+                                  <select class="form-control edit-additional-products_options_values_id field-validate" name="products_options_values_id"> 
+                                   @foreach($result['options_value'] as $options_value)
+                                    <option
+
+                                          @if(@$result['products_attributes'][0]->options_values_id == $options_value->products_options_values_id)
+                                            selected
+                                          @endif
+                                            value="{{ $options_value->products_options_values_id }}">{{ $options_value->products_options_values_name }}</option>
+                                   @endforeach                     
+                                 </select>
+                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                  {{ trans('labels.AddOptionValueText') }}</span>
+                                </div>
+                              </div>
                               <!-- /.box-body -->
                               <div class="box-footer text-center">
                                 <button type="submit" class="btn btn-primary">{{ trans('labels.Update') }}</button>

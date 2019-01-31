@@ -1,10 +1,5 @@
 <?php
-/*
-Project Name: IonicEcommerce
-Project URI: http://ionicecommerce.com
-Author: VectorCoder Team
-Author URI: http://vectorcoder.com/
-*/
+ 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\App\CategoriesController;
@@ -34,6 +29,8 @@ use App\ProductsOption;
 use App\ProductsOptionsValue;
 use App\ProductsOptionsValuesToProductsOption;
 use App\ProductsAttributesImage;
+use App\ProductsAttribute;
+use App\Http\Requests\ProductUpdateRequest;
 class AdminProductsController extends Controller
 {
 	
@@ -102,19 +99,19 @@ class AdminProductsController extends Controller
 			->where('sub_categories_description.language_id','=', $language_id)
 			->where('sub_categories.parent_id','>', 0);
 			
-			if(isset($_REQUEST['categories_id']) and !empty($_REQUEST['categories_id'])){
-				
-				$data->where('products_to_categories.categories_id','=', $_REQUEST['categories_id']);	
-				
-				if(isset($_REQUEST['product']) and !empty($_REQUEST['product'])){
-					$data->where('products_name', 'like', '%' . $_REQUEST['product'] . '%');
-				}
-				
-				$products = $data->orderBy('products.products_id', 'DESC')->paginate(100);	
-				
-			}else{
-				$products = $data->orderBy('products.products_id', 'DESC')->paginate(10);	
+		if(isset($_REQUEST['categories_id']) and !empty($_REQUEST['categories_id'])){
+			
+			$data->where('products_to_categories.categories_id','=', $_REQUEST['categories_id']);	
+			
+			if(isset($_REQUEST['product']) and !empty($_REQUEST['product'])){
+				$data->where('products_name', 'like', '%' . $_REQUEST['product'] . '%');
 			}
+			
+			$products = $data->orderBy('products.products_id', 'DESC')->paginate(100);	
+			
+		}else{
+			$products = $data->orderBy('products.products_id', 'DESC')->paginate(10);	
+		}
 			
 		
 		$results['subCategories'] = $subCategories;
@@ -154,6 +151,14 @@ class AdminProductsController extends Controller
 		$result['languages'] = $myVar->getLanguages();		
 		$result['units'] = $myVar->getUnits();
 		
+		//********
+		//******option area
+		//****************
+		$options = DB::table('products_options')
+						->where('language_id','=', $language_id)
+						->get();
+		$result['options'] = $options;
+
 		return view("admin.addproduct", $title)->with('result', $result);
 	}
 	//addNewProduct
@@ -259,6 +264,17 @@ class AdminProductsController extends Controller
 					'products_id'   	=>     $products_id,
 					'categories_id'     =>     $request->sub_category_id
 				]);	
+
+		
+
+		ProductsAttribute::create([
+					'products_id'   		  	=>     $products_id,
+					'options_id'     		  	=>     $request->products_options_id,
+					'options_values_id'     	=>     $request->products_options_values_id,
+					'options_values_price'		=>0,
+					'price_prefix'				=>'+',
+					'is_default'				=>1
+				]);
 
 		/*$options = DB::table('products_options')
 						->where('language_id','=', $language_id)
@@ -627,11 +643,35 @@ class AdminProductsController extends Controller
 		->where('categories.categories_id','=', $result['subCategoryId'][0]->categories_id)->get();
 		$result['mainCategories'] = $Categories;
 		
-		
+		//********
+		//******option area
+		//****************
+		$options = DB::table('products_options')
+			->where('language_id','=', $language_id)
+			->get();
+		$result['options'] = $options;
+		$products_attributes = DB::table('products_attributes')
+			->join('products_options', 'products_options.products_options_id', '=', 'products_attributes.options_id')
+			->join('products_options_values', 'products_options_values.products_options_values_id', '=', 'products_attributes.options_values_id')
+			->select('products_attributes.*', 'products_options.products_options_name', 'products_options.language_id', 'products_options_values.products_options_values_name' )
+
+			->where('products_attributes.products_id','=', $products_id)
+			->where('products_attributes.is_default','=', 1)
+			->get();
+
+		$options_value = DB::table('products_options_values_to_products_options')
+			->leftJoin('products_options_values','products_options_values.products_options_values_id','=','products_options_values_to_products_options.products_options_values_id')
+			->where('products_options_values_to_products_options.products_options_id','=',@$products_attributes[0]->options_id)
+			->where('products_options_values.language_id','=', $language_id)
+			->get();
+						
+		$result['options_value'] = $options_value;
+		$result['products_attributes'] = $products_attributes;
+
 		return view("admin.editproduct", $title)->with('result', $result);		
 	}
 	//updateProduct
-	public function updateProduct(Request $request)
+	public function updateProduct(ProductUpdateRequest $request)
 	{
 
 		$language_id      =   '1';	
@@ -761,18 +801,26 @@ class AdminProductsController extends Controller
 				]);
 		}
 		
-		$options = DB::table('products_options')
-			->where('language_id','=', $language_id)
-			->get();
+		// $options = DB::table('products_options')
+		// 	->where('language_id','=', $language_id)
+		// 	->get();
 		
-		$result['options'] = $options;
+		// $result['options'] = $options;
 		
-		$options_value = DB::table('products_options_values')
-			->where('language_id','=', $language_id)
-			->get();
+		// $options_value = DB::table('products_options_values')
+		// 	->where('language_id','=', $language_id)
+		// 	->get();
 		
-		$result['options_value'] = $options_value;
-		$result['data'] = array('products_id'=>$products_id, 'language_id'=>$language_id);
+		// $result['options_value'] = $options_value;
+		// $result['data'] = array('products_id'=>$products_id, 'language_id'=>$language_id);
+
+		ProductsAttribute::updateOrcreate([
+					'products_id'   		  	=>     $products_id,
+					'is_default'				=>1
+				],['options_id'     		  	=>     $request->products_options_id,
+					'options_values_id'     	=>     $request->products_options_values_id,
+					'options_values_price'		=>0,
+					'price_prefix'				=>'+',]);
 				
 		return redirect('admin/add/product/attribute/'.$products_id);		
 	}
@@ -1334,6 +1382,7 @@ class AdminProductsController extends Controller
 	{
 		$value_id = $request->value_id;
 		DB::table('products_options_values')->where('products_options_values_id','=',$value_id)->delete();
+
 		$getValuesId = DB::table('products_options_values_to_products_options')->where('products_options_values_id','=',$value_id)->delete();
 		
 		$attributes = DB::table('products_options_values_to_products_options')

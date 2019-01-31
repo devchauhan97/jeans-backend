@@ -33,3 +33,4 @@ class CreateProductsOptionsTable extends Migration
          Schema::dropIfExists('products_options');
     }
 }
+

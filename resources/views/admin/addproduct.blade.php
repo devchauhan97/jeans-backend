@@ -16,14 +16,12 @@
     <!-- Info boxes --> 
     
     <!-- /.row -->
-
     <div class="row">
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">{{ trans('labels.AddNewProduct') }} </h3>
           </div>
-          
           <!-- /.box-header -->
           <div class="box-body">
             <div class="row">
@@ -264,11 +262,33 @@
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.feature') }} </label>
+                                  <label for="name"class="col-sm-2 col-md-3 control-label">{{ trans('labels.feature') }} </label>
                                   <div class="col-sm-10 col-md-4">
                                      <input type="checkbox" class="change_is_feature" name="is_feature" value="" >
-                                   </div>
+                                  </div>
                                </div>
+                              <div class="form-group">
+                                  <label for="name"class="col-sm-2 col-md-3 control-label">{{ trans('labels.OptionName') }}       </label>
+                                  <div class="col-sm-10 col-md-4">
+                                    <select class="form-control default-option-id field-validate" name="products_options_id">
+                                    <option value=""> {{ trans('labels.AddOptionValueText') }} </option>
+                                    @foreach($result['options'] as $options)
+                                      <option value="{{ $options->products_options_id }}">{{ $options->products_options_name }}</option>
+                                    @endforeach 
+                                  </select>
+                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                              {{ trans('labels.AddOptionNameText') }}
+                                   </span>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.OptionValues') }}</label>
+                                <div class="col-sm-10 col-md-4">
+                                  <select class="form-control products_options_values_id field-validate" name="products_options_values_id"> </select>
+                                  <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                  {{ trans('labels.AddOptionValueText') }}</span>
+                                </div>
+                              </div>
                               <!-- /.box-body -->
                               <div class="box-footer text-center">
                                 <button type="submit" class="btn btn-primary">{{ trans('labels.AddProduct') }}</button>
