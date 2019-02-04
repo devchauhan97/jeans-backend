@@ -19,7 +19,7 @@ class CreateCouponsTable extends Migration
             $table->dateTime('date_created')->nullable();
             $table->dateTime('date_modified')->nullable();
             $table->mediumText('description')->nullable();
-            $table->string('discount_type',100)->comment('Options: fixed_cart, percent, Default: fixed_cart.');/ /fixed_product and percent_product.
+            $table->string('discount_type',100)->comment('Options: fixed_cart, percent, Default: fixed_cart.');//fixed_product and percent_product.
             $table->integer('amount'); 
             $table->dateTime('expiry_date');
             $table->integer('usage_count')->nullable();

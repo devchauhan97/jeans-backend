@@ -175,7 +175,12 @@
         </li>
         @endif
         
-        
+         <li class="treeview {{ Request::is('admin/section') ? 'active' : '' }}">
+          <a  href="{{ URL::to('admin/section')}}"><i class="fa fa-credit-card" aria-hidden="true"></i> <span>
+          {{ trans('labels.section') }}</span>
+          </a>
+        </li>
+
         <li class="treeview {{ Request::is('admin/facebooksettings') ? 'active' : '' }} {{ Request::is('admin/setting') ? 'active' : '' }} {{ Request::is('admin/googlesettings') ? 'active' : '' }} {{ Request::is('admin/pushnotification') ? 'active' : '' }} {{ Request::is('admin/orderstatus') ? 'active' : '' }} {{ Request::is('admin/addorderstatus') ? 'active' : '' }} {{ Request::is('admin/editorderstatus/*') ? 'active' : '' }} {{ Request::is('admin/alertsetting') ? 'active' : '' }} {{ Request::is('admin/units') ? 'active' : '' }} {{ Request::is('admin/addunit') ? 'active' : '' }} {{ Request::is('admin/editunit/*') ? 'active' : '' }} ">
           <a href="#">
             <i class="fa fa-gears" aria-hidden="true"></i>

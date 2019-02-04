@@ -321,7 +321,15 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/pageWebStatus', 'AdminPagesController@pageWebStatus');
 	
 	Route::post('/product/feature', 'AdminProductsController@productFeature');
-	
+	//***
+	//**page section
+	//*******
+	Route::get('/section', 'AdminPageSectionController@sections');
+	Route::get('/addsectionsimages', 'AdminPageSectionController@addSectionsImages');
+	Route::post('/add/section', 'AdminPageSectionController@addNewSection');
+	Route::get('/edit/section/{id}', 'AdminPageSectionController@editSection');
+	Route::post('/update/section', 'AdminPageSectionController@updateSection');
+	Route::post('/delete/section/', 'AdminPageSectionController@deleteSection');
 
 });
 

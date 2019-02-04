@@ -83,7 +83,9 @@
       {!! Form::file('newImage', array('id'=>'newImage')) !!}
     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.UploadAdditionalImageText') }}</span>
     <br>
-      <img src=" " alt="" width=" 100px">
+       @foreach($result['products_attributes_image'] as $val)
+      <img src="{{getFtpImage($val->image)}}" alt="" width=" 100px">
+      @endforeach
     </div>
   </div>
 	<div class="alert alert-danger addError" style="display: none; margin-bottom: 0;" role="alert"><i class="icon fa fa-ban"></i>{{ trans('labels.OpitonExistText') }} </div>

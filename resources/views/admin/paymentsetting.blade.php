@@ -56,9 +56,9 @@
                                     </label><br>
 
                                     
-                                    <label class=" control-label">
+                                   <!--  <label class=" control-label">
                                           <input type="checkbox" name="cash_on_delivery" id="cash_on_delivery" value="1" class="checkboxess " @if($result['shipping_methods'][0]->cash_on_delivery==1) checked @endif > &nbsp;{{ trans('labels.CashOnDelivery') }}
-                                    </label><br>
+                                    </label><br> -->
 
                                     
                                    <!--  <label class=" control-label">
@@ -117,11 +117,11 @@
                            	<hr>
                            	
                            	
-                           	
-                           	<hr>
+                           	<!-- 
+                           	<hr> -->
                             
                             {!! Form::hidden('cod_name',  $result['shipping_methods'][0]->cod_name , array('class'=>'form-control', 'id'=>'cod_name')) !!}
-                            @foreach($result['cod_description'] as $description_data)
+                           <!--  @foreach($result['cod_description'] as $description_data)
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.CashOnDeliveryName') }} ({{ $description_data['language_name'] }})</label>
                                   <div class="col-sm-10 col-md-4">
@@ -133,7 +133,7 @@
                              
                             @endforeach
                            	
-                            <hr>
+                            <hr> -->
                                                         
                             <div class="form-group">
 								<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.PaymentCurrency') }}</label>

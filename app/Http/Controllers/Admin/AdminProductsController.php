@@ -495,12 +495,10 @@ class AdminProductsController extends Controller
 			$uploadImage = 'product_images/'.$fileName; 
 			storeImage($uploadImage);
 
-			ProductsAttributesImage::create([
-									'products_id'   	=>   $request->products_id,
+			ProductsAttributesImage::updateOrCreate(['products_id'   	=>   $request->products_id,'options_values_id' =>   $request->products_options_values_id],[
+									
 									'image'  			=>   $uploadImage,
 									'options_values_id' =>   $request->products_options_values_id,
-									//'htmlcontent'  	=>   $request->htmlcontent,
-									// /'sort_order'  	=>   $request->sort_order,
 									]);
 		
 		} 
@@ -870,6 +868,13 @@ class AdminProductsController extends Controller
 			->get();
 		
 		$result['products_attributes'] = $products_attributes;
+
+		$products_attributes_image = ProductsAttributesImage::select('image')->where('products_id','=', $products_id)
+					->where('options_values_id',$products_attributes[0]->options_values_id)
+					->get();
+
+		$result['products_attributes_image'] = $products_attributes_image;
+
 		$result['languages'] = $languages;
 		
 		return view("admin/editproductattributeform")->with('result', $result);

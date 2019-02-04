@@ -35,7 +35,8 @@ class AdminSlidersController extends Controller
 {
 	
 	//listingTaxClass
-	public function sliders(Request $request){
+	public function sliders(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.ListingSliders"));		
 		
 		$result = array();
@@ -50,7 +51,8 @@ class AdminSlidersController extends Controller
 	}
 	
 	//addTaxClass
-	public function addsliderimage(Request $request){
+	public function addsliderimage(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.AddSliderImage"));
 		
 		$result = array();
@@ -76,7 +78,8 @@ class AdminSlidersController extends Controller
 	}
 	
 	//addNewZone	
-	public function addNewSlide(Request $request){
+	public function addNewSlide(SliderRequest $request)
+	{
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
@@ -95,6 +98,7 @@ class AdminSlidersController extends Controller
 			$fileName = time().'.'.$image->getClientOriginalName();
 			$image->move(storage_path('app/public').'/slider_images/', $fileName);
 			$uploadImage = 'slider_images/'.$fileName; 
+			storeImage($uploadImage);
 		}else{
 			$uploadImage = '';
 		}
@@ -123,7 +127,8 @@ class AdminSlidersController extends Controller
 	}
 	
 	//editTaxClass
-	public function editslide(Request $request){		
+	public function editslide(Request $request)
+	{		
 		$title = array('pageTitle' => Lang::get("labels.EditSliderImage"));
 		$result = array();		
 		$result['message'] = array();
@@ -150,7 +155,8 @@ class AdminSlidersController extends Controller
 	}
 	
 	//updateTaxClass
-	public function updateSlide(Request $request){
+	public function updateSlide(SliderRequest $request)
+	{
 		
 		$myVar = new AdminSiteSettingController();
 		$languages = $myVar->getLanguages();		
@@ -197,7 +203,8 @@ class AdminSlidersController extends Controller
 	}
 	
 	//deleteCountry
-	public function deleteSlider(Request $request){
+	public function deleteSlider(Request $request)
+	{
 		DB::table('sliders_images')->where('sliders_id', $request->sliders_id)->delete();
 		return redirect()->back()->withErrors([Lang::get("labels.SliderDeletedMessage")]);
 	}

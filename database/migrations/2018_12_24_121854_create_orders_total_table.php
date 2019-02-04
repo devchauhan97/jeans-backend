@@ -15,7 +15,8 @@ class CreateOrdersTotalTable extends Migration
     {
         // Schema::create('orders_total', function (Blueprint $table) {
         //     $table->increments('orders_total_id');
-        //     $table->integer('orders_id');
+        //     $table->unsignedInteger('orders_id');
+        //    $table->foreign('orders_id')->references('orders')->on('orders_id')->onDelete('cascade');
         //     $table->string('title',255);
         //     $table->string('text',255);
         //     $table->decimal('value',15,4);

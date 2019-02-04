@@ -81,19 +81,18 @@ function getZoneCountry($zone_country_id){
 function storeImage($uploadImage)
 {
     $file_local = Storage::disk('public')->get($uploadImage);
-
-    if(App::environment('APP_ENV') == 'local')
-      $uploadImage= 'images/'.$uploadImage;
-
-    $file_ftp = Storage::disk('ftp')->put($uploadImage, $file_local); 
+    $uploadImage= 'images/'.$uploadImage;
+    $file_ftp = Storage::disk('ftp')->put($uploadImage, $file_local);  
 }
 
 function getFtpImage($imagepath)
 {
 
     $host =Config::get('filesystems.disks.ftp.host');
-    $image ='http://'.$host.'/'.$imagepath;
-  
+    if(env('APP_ENV') == 'local')
+        $image ='http://'.$host.'/images/'.$imagepath;
+    else $image ='http://'.$host.'/'.$imagepath;
+      
     return $image;
 }
 

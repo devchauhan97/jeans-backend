@@ -15,7 +15,10 @@ class CreateOrdersProductsTable extends Migration
     {
         Schema::create('orders_products', function (Blueprint $table) {
             $table->increments('orders_products_id');
-            $table->integer('orders_id')->index();
+            //$table->integer('orders_id')->index();
+            $table->unsignedInteger('orders_id');
+            $table->foreign('orders_id')->references('orders_id')->on('orders')->onDelete('cascade');
+
             $table->integer('products_id')->index();
             $table->string('products_model',12)->nullable();
             $table->string('products_name',64);

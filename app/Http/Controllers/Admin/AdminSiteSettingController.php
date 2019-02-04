@@ -416,7 +416,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//facebookSettings
-	public function facebookSettings(Request $request){
+	public function facebookSettings(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.facebook_settings"));		
 		
 		$result = array();

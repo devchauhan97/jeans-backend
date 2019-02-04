@@ -46,7 +46,7 @@
                         
                             {!! Form::open(array('url' =>'admin/updateSetting', 'method'=>'post', 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
                            <br>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                               <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.FacebookAppID') }}
                               
                               </label>
@@ -64,7 +64,7 @@
                                 {!! Form::text($result['settings'][1]->name, $result['settings'][1]->value, array('class'=>'form-control', 'id'=>$result['settings'][1]->name)) !!}
                                 <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;margin-top: 0;">{{ trans('labels.FacebookSecretIDText') }}</span>
                               </div>
-                            </div>
+                            </div> -->
                             
                             
                             <div class="form-group">

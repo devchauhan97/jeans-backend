@@ -15,7 +15,8 @@ class CreateOrdersStatusHistoryTable extends Migration
     {
         Schema::create('orders_status_history', function (Blueprint $table) {
             $table->increments('orders_status_history_id');
-            $table->integer('orders_id')->index();
+            $table->unsignedInteger('orders_id');
+            $table->foreign('orders_id')->references('orders_id')->on('orders')->onDelete('cascade');
             $table->integer('orders_status_id');
             $table->dateTime('date_added');
             $table->integer('customer_notified')->nullable()->default('0');

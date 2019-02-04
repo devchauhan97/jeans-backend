@@ -706,7 +706,11 @@ $(document).ready(function(e) {
 		
 	});
 	
-	
+	$(document).on('click', '#deleteSectionId', function(){
+		var sections_id = $(this).attr('sections_id');
+		$('#sections_id').val(sections_id);
+		$('#deleteSectionModal').modal('show');
+	});
 	//deleteAddressModal
 	$(document).on('click', '#deleteSliderId', function(){
 		var sliders_id = $(this).attr('sliders_id');

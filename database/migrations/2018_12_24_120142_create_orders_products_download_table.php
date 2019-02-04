@@ -15,7 +15,8 @@ class CreateOrdersProductsDownloadTable extends Migration
     {
         Schema::create('orders_products_download', function (Blueprint $table) {
             $table->increments('orders_products_download_id');
-            $table->integer('orders_id')->index()->default('0');
+            $table->unsignedInteger('orders_id');
+            $table->foreign('orders_id')->references('orders_id')->on('orders')->onDelete('cascade');
             $table->integer('orders_products_id')->default('0');
             $table->string('orders_products_filename',255);
             $table->integer('download_maxdays')->default('0');

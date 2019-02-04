@@ -48,7 +48,7 @@
                       <th>{{ trans('labels.ID') }}</th>
                       <th>{{ trans('labels.OrderStatus') }}</th>
                       <th>{{ trans('labels.Default') }}</th>
-                      <th>{{ trans('labels.Language') }}</th>
+                  <!--     <th>{{ trans('labels.Language') }}</th> -->
                       <th>{{ trans('labels.Action') }}</th>
                     </tr>
                   </thead>
@@ -57,8 +57,8 @@
                         <tr>
                             <td>{{ $OrderStatus->orders_status_id }}</td>
                             <td>{{ $OrderStatus->orders_status_name }}</td>
-                            <td>@if($OrderStatus->public_flag==1) {{ trans('labels.Yes') }}  @else {{ trans('labels.No') }} @endif</td>
-                            <td>{{ $OrderStatus->name }}</td>
+                            <td>@if($OrderStatus->public_flag == 1 ) {{ trans('labels.Yes') }}  @else {{ trans('labels.No') }} @endif</td>
+                            <!-- <td>{{ $OrderStatus->name }}</td> -->
                             <td><a data-toggle="tooltip" data-placement="bottom" title="{{ trans('labels.Edit') }}" href="editorderstatus/{{ $OrderStatus->orders_status_id }}" class="badge bg-light-blue"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
                             <a data-toggle="tooltip" data-placement="bottom" title="{{ trans('labels.Delete') }}" id="deleteOrderStatusId" orders_status_id ="{{ $OrderStatus->orders_status_id }}" class="badge bg-red"><i class="fa fa-trash" aria-hidden="true"></i></a>
                            </td>
