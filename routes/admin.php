@@ -140,7 +140,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 	//orders
 	Route::get('/orders', 'AdminOrdersController@orders');		
-	Route::get('/vieworder/{id}', 'AdminOrdersController@vieworder');
+	Route::get('/vieworder/{id}', 'AdminOrdersController@viewOrder');
 	Route::post('/updateOrder', 'AdminOrdersController@updateOrder');
 	Route::post('/deleteOrder', 'AdminOrdersController@deleteOrder');
 	

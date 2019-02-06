@@ -1,9 +1,9 @@
 <div style="width: 100%; display:block;">
-<h2>{{ trans('labels.EcommerceAppOrderStatus') }}</h2>
+<h2>{{ $data['app_name'] . trans('labels.EcommerceAppOrderStatus') }}</h2>
 <p>
-	<strong>{{ trans('labels.Hi') }} {{ $data['devices'][0]->customers_firstname }} {{ $data['devices'][0]->customers_lastname }}!</strong><br>
+	<strong>{{ trans('labels.Hi') }} {{ $data['devices']->customers_firstname }} {{ $data['devices']->customers_lastname }}!</strong><br>
 	{{ $data['message'] }}<br><br>
 	<strong>{{ trans('labels.Sincerely') }},</strong><br>
-	{{ trans('labels.regardsForThanks') }}
+	{{ $data['app_name'] }}
 </p>
 </div>

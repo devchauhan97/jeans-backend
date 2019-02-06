@@ -29,7 +29,7 @@ use Auth;
 //for requesting a value 
 use Illuminate\Http\Request;
 //use Illuminate\Routing\Controller;
-
+use App\Http\Requests\SliderRequest;
 
 class AdminSlidersController extends Controller
 {

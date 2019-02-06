@@ -31,6 +31,8 @@ use App\ProductsOptionsValuesToProductsOption;
 use App\ProductsAttributesImage;
 use App\ProductsAttribute;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Events\ProductNotificationMail;
+use Event;
 class AdminProductsController extends Controller
 {
 	
@@ -293,6 +295,8 @@ class AdminProductsController extends Controller
 		// $myVar = new AdminAlertController();
 		// $alertSetting = $myVar->newProductNotification($products_id);
 		
+		Event::fire(new ProductNotificationMail($products_id));
+
 		return redirect('admin/add/product/attribute/'.$products_id);
 	}
 	

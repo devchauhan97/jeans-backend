@@ -35,7 +35,9 @@ use Illuminate\Support\Facades\Redirect;
 //for requesting a value 
 use Illuminate\Http\Request;
 //use Illuminate\Routing\Controller;
-
+use App\OrdersProductsAttribute;
+use App\Events\OrderStatusChangeMail;
+use Event;
 class AdminOrdersController extends Controller
 {
 	//add listingOrders
@@ -87,7 +89,8 @@ class AdminOrdersController extends Controller
 	
 	
 	//view order detail
-	public function vieworder(Request $request){
+	public function viewOrder(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.ViewOrder"));
 		$language_id             =   '1';	
 		$orders_id        	 	 =   $request->id;			
@@ -103,7 +106,7 @@ class AdminOrdersController extends Controller
 				->where('orders.orders_id', '=', $orders_id)->orderby('orders_status_history.date_added', 'DESC')->get();
 			
 		//foreach
-		foreach($order as $data){
+		foreach($order as $data) {
 			$orders_id	 = $data->orders_id;
 			
 			$orders_products = DB::table('orders_products')
@@ -115,14 +118,23 @@ class AdminOrdersController extends Controller
 				$total_tax	  = 0;
 				$product = array();
 				$subtotal = 0;
-				foreach($orders_products as $orders_products_data){
-					$product_attribute = DB::table('orders_products_attributes')
-						->where([
-							['orders_products_id', '=', $orders_products_data->orders_products_id],
-							['orders_id', '=', $orders_products_data->orders_id],
-						])
-						->get();
-						
+				foreach($orders_products as $orders_products_data) {
+					$product_attribute = OrdersProductsAttribute::leftjoin('products_attributes_images',function($q1){
+                                        $q1->on('options_values_id','orders_products_attributes.products_options_values_id');
+                                    })->where([
+										['orders_products_id', '=', $orders_products_data->orders_products_id],
+										['orders_id', '=', $orders_products_data->orders_id],
+									])
+									->get();
+
+                    if( count($product_attribute) > 0 &&  isset($product_attribute[0]->products_attributes_image_id) ) {
+                         $image = $product_attribute[0]->image;
+                    } else {
+						$image = $orders_products_data->image;
+                    }
+                    
+                    $orders_products_data->image = $image; 
+
 					$orders_products_data->attribute = $product_attribute;
 					$product[$i] = $orders_products_data;
 					$total_price = $total_price+$orders_products[$i]->final_price;
@@ -158,9 +170,9 @@ class AdminOrdersController extends Controller
 		return view("admin.vieworder", $title)->with('data', $ordersData);
 	}
 	
-	
 	//update order
-	public function updateOrder(Request $request){
+	public function updateOrder(Request $request)
+	{
 		 $orders_status 		=	 $request->orders_status;
 		 $comments 	 			=	 $request->comments;
 		 $orders_id 			= 	 $request->orders_id;
@@ -173,51 +185,54 @@ class AdminOrdersController extends Controller
 		 
 		 $status = DB::table('orders_status')->where('orders_status_id', '=', $orders_status)->get();
 		
-		
-		 if($old_orders_status==$orders_status){
+		 if($old_orders_status==$orders_status) {
+
 			 return redirect()->back()->with('error', Lang::get("labels.StatusChangeError"));
-		 }else{
+
+		 } else {
 		 
-		 //orders status history
-		 $orders_history_id = DB::table('orders_status_history')->insertGetId(
+			//orders status history
+			$orders_history_id = DB::table('orders_status_history')->insertGetId(
 			[	 'orders_id'  => $orders_id,
 				 'orders_status_id' => $orders_status,
 				 'date_added'  => $date_added,
 				 'customer_notified' =>'1',
 				 'comments'  =>  $comments
 			]);
-		
-			if($orders_status=='2'){
+
+			if($orders_status=='2') {
 				
 				$orders_products = DB::table('orders_products')->where('orders_id', '=', $orders_id)->get();
 				
-				foreach($orders_products as $products_data){
+				foreach($orders_products as $products_data) {
 					DB::table('products')->where('products_id', $products_data->products_id)->update([
 						'products_quantity' => DB::raw('products_quantity - "'.$products_data->products_quantity.'"'),
 						'products_ordered'  => DB::raw('products_ordered + 1')
 						]);
 				}
 			}
-		
-		$orders = DB::table('orders')->where('orders_id', '=', $orders_id)->get();
-		
-		$data = array();
-		$data['customers_id'] = $orders[0]->customers_id;
-		$data['orders_id'] = $orders_id;
-		$data['status'] = $status[0]->orders_status_name;
-		
-		//notify user		
-		$myVar = new AdminAlertController();
-		$myVar->orderStatusChange($data);
-						
-		return redirect()->back()->with('message', Lang::get("labels.OrderStatusChangedMessage"));
+
+			$orders = DB::table('orders')->where('orders_id', '=', $orders_id)->get();
+
+			// $data = array();
+			// $data['customers_id'] = $orders[0]->customers_id;
+			// $data['orders_id'] = $orders_id;
+			// $data['status'] = $status[0]->orders_status_name;
+
+			// //notify user		
+			// $myVar = new AdminAlertController();
+			// $myVar->orderStatusChange($data);
+			Event::fire(new OrderStatusChangeMail($orders_id,$orders[0]->customers_id,$status[0]->orders_status_name));		
+
+			return redirect()->back()->with('message', Lang::get("labels.OrderStatusChangedMessage"));
 		
 		}
 		
 	}
 	
 	//deleteorders
-	public function deleteOrder(Request $request){
+	public function deleteOrder(Request $request) 
+	{
 		DB::table('orders')->where('orders_id', $request->orders_id)->delete();
 		DB::table('orders_products')->where('orders_id', $request->orders_id)->delete();
 		return redirect()->back()->withErrors([Lang::get("labels.OrderDeletedMessage")]);

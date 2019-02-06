@@ -36,7 +36,7 @@ class Customer extends Authenticatable
 	
 	//use user id of admin
 	protected $primaryKey = 'customers_id';
-	protected $timestamps = true;
+	public    $timestamps = true;
 	//public $table = true;
 	
 }

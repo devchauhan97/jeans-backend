@@ -61,6 +61,9 @@
                   </thead>
                   <tbody>
                     @foreach ($result['shipping_methods'] as $key=>$shipping_methods)
+                        @if($shipping_methods->methods_type_link!='flateRate' )
+                            @continue
+                        @endif
                         <tr>
                             <td>
                                 <label>
