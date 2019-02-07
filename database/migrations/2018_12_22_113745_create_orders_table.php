@@ -63,7 +63,7 @@ class CreateOrdersTable extends Migration
             $table->mediumText('order_information');
             $table->tinyInteger('is_seen')->default('0');
             $table->text('coupon_code');
-            $table->integer('coupon_amount');
+            $table->decimal('coupon_amount',10,2);
             $table->string('exclude_product_ids',255);
             $table->string('product_categories',255);
             $table->string('excluded_product_categories',255);

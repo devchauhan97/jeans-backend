@@ -371,7 +371,8 @@ class AdminCustomersController extends Controller
 	
 	
 	//deleteProduct
-	public function deletecustomers(Request $request){
+	public function deletecustomers(Request $request)
+	{
 		$customers_id = $request->customers_id;
 		
 		DB::table('customers')->where('customers_id','=', $customers_id)->delete();
@@ -380,7 +381,8 @@ class AdminCustomersController extends Controller
 		return redirect()->back()->withErrors([Lang::get("labels.DeleteCustomerMessage")]);
 	}
 	
-	public function getZones(Request $request){
+	public function getZones(Request $request)
+	{
 		$getZones = getZoneCountry($request->zone_country_id);
 		
 		$responseData = array('success'=>'1', 'data'=>$getZones, 'message'=>"Returned all states.");

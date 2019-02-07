@@ -168,20 +168,17 @@
           <img src="../../dist/img/credit/american-express.png" alt="American Express">
           <img src="../../dist/img/credit/paypal2.png" alt="Paypal">-->
           
-		  <p class="lead" style="margin-bottom:10px">{{ trans('labels.Orderinformation') }}:</p>
+       <?php
+
+        $order_infor=json_decode($data['orders_data'][0]->order_information, JSON_NUMERIC_CHECK);
+      ?>
+      <p class="lead" style="margin-bottom:10px">{{ trans('labels.Orderinformation') }}:  @if( $order_infor['paid'] == true ) 
+              <span class="glyphicon glyphicon-check"></span>
+            @else 
+            <span class="glyphicon glyphicon-unchecked"></span>
+            @endif
+          </p>
           <p class="text-muted well well-sm no-shadow" style="text-transform:capitalize; word-break:break-all;">
-             <?php
-              // $s=json_decode($data['orders_data'][0]->order_information);
-              
-              //  foreach($s as $key =>$value){ 
-              //     if($s[$key] == 'Paid')
-              //       echo 'p----------'.$key;
-              //     else
-              //       echo '----------'.$key;
-                     
-              //     }
-             
-             ?>
            @if(trim($data['orders_data'][0]->order_information) != '[]' or !empty($data['orders_data'][0]->order_information))
            		{{ $data['orders_data'][0]->order_information }}
            @endif

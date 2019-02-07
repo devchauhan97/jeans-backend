@@ -15,7 +15,8 @@ class CreateCustomersBasketAttributesTable extends Migration
     {
         Schema::create('customers_basket_attributes', function (Blueprint $table) {
              $table->increments('customers_basket_attributes_id');
-             $table->integer('customers_basket_id');
+             $table->unsignedInteger('customers_basket_id');
+             $table->foreign('customers_basket_id')->references('customers_basket_id')->on('customers_basket')->onDelete('cascade');
              $table->integer('customers_id')->index();
              $table->Text('products_id');
              $table->integer('products_options_id');

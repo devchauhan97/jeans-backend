@@ -409,7 +409,26 @@ class AdminProductsController extends Controller
 				'price_prefix'  		=>   $request->price_prefix,
 				'is_default'			=>	 $request->is_default
 				]);
+		$extensions = imageType();
+
+		if( $request->hasFile('newImage') and in_array($request->newImage->extension(), $extensions)) {
+						
+			$image = $request->newImage;
+			$fileName = time().'.'.$image->getClientOriginalName();
+			$image->move(storage_path('app/public').'/product_images/', $fileName);
+			$uploadImage = 'product_images/'.$fileName; 
+			storeImage($uploadImage);
+
+			ProductsAttributesImage::create([
+									'products_id'   	=>   $request->products_id,
+									'image'  			=>   $uploadImage,
+									'options_values_id' =>   $request->products_options_values_id,
+									//'htmlcontent'  	=>   $request->htmlcontent,
+									// /'sort_order'  	=>   $request->sort_order,
+									]);
 		
+		} 
+
 		$products_attributes = DB::table('products_attributes')
 			->join('products_options', 'products_options.products_options_id', '=', 'products_attributes.options_id')
 			->join('products_options_values', 'products_options_values.products_options_values_id', '=', 'products_attributes.options_values_id')
@@ -1154,7 +1173,9 @@ class AdminProductsController extends Controller
 		
 		$attributes = DB::table('products_options')
 			->Join('languages','languages.languages_id','=','products_options.language_id')
-			->orderby('session_regenerate_id','ASC')->paginate(10);
+			->where('products_options.language_id',1)
+			->orderby('session_regenerate_id','ASC')
+			->paginate(10);
 		
 		$result['attributes'] = $attributes;
 				
@@ -1165,7 +1186,9 @@ class AdminProductsController extends Controller
 			
 			$attributes = DB::table('products_options_values_to_products_options')
 			->leftJoin('products_options_values', 'products_options_values.products_options_values_id','=', 'products_options_values_to_products_options.products_options_values_id')
-			->where('products_options_values_to_products_options.products_options_id','=',$attributes_data->products_options_id)->get();	
+			->where('products_options_values_to_products_options.products_options_id','=',$attributes_data->products_options_id)
+			->where('products_options_values.language_id',1)
+			->get();	
 			
 			$result2[$index]->values =$attributes;
 			$index++;
