@@ -303,24 +303,31 @@ class AdminCategoriesController extends Controller
 		$message = Lang::get("labels.CategoriesUpdateMessage");
 		return redirect()->back()->withErrors([$message]);
 	}
-	
-	
 	//delete category
 	public function deleteCategory(Request $request)
 	{
 		
-		
-		DB::table('categories')->where('categories_id', $request->id)->delete();
-		DB::table('categories_description')->where('categories_id', $request->id)->delete();
-		
-		$listingCategories = DB::table('categories')
-		->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
-		->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name')
-		->where('parent_id', '0')->get();
-		
-		$message = Lang::get("labels.CategoriesDeleteMessage");
-				
-		return redirect()->back()->withErrors([$message]);
+		try {
+
+			DB::table('categories')->where('categories_id', $request->id)->delete();
+			// DB::table('categories_description')->where('categories_id', $request->id)->delete();
+			
+			// $listingCategories = DB::table('categories')
+			// ->leftJoin('categories_description','categories_description.categories_id', '=', 'categories.categories_id')
+			// ->select('categories.categories_id as id', 'categories.categories_image as image',  'categories.date_added as date_added', 'categories.last_modified as last_modified', 'categories_description.categories_name as name')
+			// ->where('parent_id', '0')->get();
+			
+			$message = Lang::get("labels.CategoriesDeleteMessage");
+			return redirect()->back()->withSuccess($message);
+
+		} catch (\Illuminate\Database\QueryException $e) {
+
+ 		    if ( $e->errorInfo[0] == 23000) {
+
+			 	$message ='Cannot delete category.some product related to this.Please delete product first';
+ 		    }
+			return redirect()->back()->withErrors([$message]);
+		}	
 	}
 	
 	

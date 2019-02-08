@@ -333,7 +333,6 @@ Route::group(['middleware' => 'admin'], function () {
 
 });
 
-
 //log in
 Route::get('/login', 'AdminController@login');
 Route::post('/checkLogin', 'AdminController@checkLogin');

@@ -15,7 +15,10 @@ class CreateProductsToCategoriesTable extends Migration
     {
          Schema::create('products_to_categories', function (Blueprint $table) {
             $table->integer('products_id')->index();
-            $table->integer('categories_id')->index();
+            //$table->integer('categories_id')->index();
+
+            $table->unsignedInteger('categories_id');
+            $table->foreign('categories_id')->references('categories_id')->on('categories');
             $table->timestamps();
         });
     }

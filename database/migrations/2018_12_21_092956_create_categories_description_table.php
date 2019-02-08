@@ -15,7 +15,9 @@ class CreateCategoriesDescriptionTable extends Migration
     {
         Schema::create('categories_description', function (Blueprint $table) {
             $table->increments('categories_description_id');
-            $table->integer('categories_id')->default('0');
+            //$table->integer('')->default('0');
+            $table->unsignedInteger('categories_id');
+            $table->foreign('categories_id')->references('categories_id')->on('categories')->onDelete('cascade');
             $table->integer('language_id')->default('1');
             $table->string('categories_name')->index();
             $table->timestamps();
