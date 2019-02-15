@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use DB;
+use App\ProductsAttribute;
+
 class ProductUpdateRequest extends FormRequest
 {
     /**
@@ -40,20 +41,17 @@ class ProductUpdateRequest extends FormRequest
 
      public function withValidator($validator)
     {
-
         $validator->after(function ($validator) {
             
-            $checkRecord = DB::table('products_attributes')->where([
-                        'options_id'       =>   $this->products_options_id,
-                        'products_id'      =>   $this->id, 
-                        'options_values_id'=>   $this->products_options_values_id,  
-                ])->whereNotIn('products_attributes_id',[$this->products_attributes_id]
-                    )
-                ->get();
+            $checkRecord = ProductsAttribute::where([
+                        'products_id'       =>   $this->id, 
+                        'options_values_id' =>   $this->products_options_values_id,  
+                        'is_default'        =>      0
+                ])->exists();
 
-            if ( count($checkRecord) > 0 ) {
+            if ( $checkRecord ) {
 
-                $validator->errors()->add('products_options_id', 'Option allready exits.');
+                 $validator->errors()->add('products_options_values_id', 'Value for product option allready exists.');
             }
 
         });

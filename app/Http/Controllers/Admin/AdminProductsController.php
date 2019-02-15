@@ -33,6 +33,7 @@ use App\ProductsAttribute;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Events\ProductNotificationMail;
 use Event;
+use App\Http\Requests\AddAttributeValueRequest;
 class AdminProductsController extends Controller
 {
 	
@@ -1309,7 +1310,7 @@ class AdminProductsController extends Controller
 	}
 	
 	//addattributevalue
-	public function addAttributeValue(Request $request)
+	public function addAttributeValue(AddAttributeValueRequest $request)
 	{
 				
 		$attributes = array();	
@@ -1335,7 +1336,7 @@ class AdminProductsController extends Controller
 	}
 	
 	//updateattributevalue
-	public function updateAttributeValue(Request $request)
+	public function updateAttributeValue(AddAttributeValueRequest $request)
 	{
 				
 		$attributes = array();	

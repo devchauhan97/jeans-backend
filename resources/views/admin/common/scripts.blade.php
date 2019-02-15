@@ -290,6 +290,22 @@ $(document).ready(function(e) {
 					$('#addAttributeModal').modal('hide');
 					$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
 			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				console.log(res.responseJSON)
+				jQuery('.alert-danger').html('');
+				$.each(res.responseJSON, function(key, value){
+		  			 
+		  			$.notify({
+						// options
+						message: value 
+					},{
+						// settings
+						type: 'error'
+					}); 
+		  		});	
+				
+			}
 		});
 			
 	});
@@ -346,9 +362,24 @@ $(document).ready(function(e) {
 			data: formData,
 			success: function (res) {
 					$('.addError').hide();
-					
 					$("#content_"+products_options_id+'_'+language_id).parent('tbody').html(res);
 			},
+			error: function (res,error) {
+				//$('.addDefaultError').show();
+				console.log(res.responseJSON)
+				jQuery('.alert-danger').html('');
+				$.each(res.responseJSON, function(key, value){
+		  			 
+		  			$.notify({
+						// options
+						message: value 
+					},{
+						// settings
+						type: 'error'
+					}); 
+		  		});	
+				
+			}
 		});
 			
 	});
