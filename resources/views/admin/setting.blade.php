@@ -67,12 +67,12 @@
                               </div>
                             </div>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                               <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.NewProductDuration') }}</label>
                               <div class="col-sm-10 col-md-4">
                                 {!! Form::text($result['settings'][20]->name, $result['settings'][20]->value, array('class'=>'form-control', 'id'=>$result['settings'][20]->name)) !!}<span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;margin-top: 0;">{{ trans('labels.NewProductDurationText') }}</span>
                               </div>
-                            </div>
+                            </div> -->
                                                      
                             <hr>                            
                             <h4>{{ trans('labels.InqueryEmails') }}</h4>

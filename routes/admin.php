@@ -304,6 +304,15 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::post('/updatenews', 'AdminNewsController@updatenews');
 	Route::post('/deletenews', 'AdminNewsController@deletenews');
 
+	
+	//Blogs
+	Route::get('/blogs', 'AdminBlogsController@index');
+	Route::get('/addblogs', 'AdminBlogsController@addBlogs');
+	Route::post('/addnewblogs', 'AdminBlogsController@addNewBlogs');
+	Route::get('/editblogs/{id}', 'AdminBlogsController@editBlogs');
+	Route::post('/updateblogs', 'AdminBlogsController@updateBlogs');
+	Route::post('/deleteblogs', 'AdminBlogsController@deleteBlogs');
+
 	//app pages controller
 	Route::get('/pages', 'AdminPagesController@pages');
 	Route::get('/addpage', 'AdminPagesController@addpage');

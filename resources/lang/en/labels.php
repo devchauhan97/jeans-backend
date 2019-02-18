@@ -55,6 +55,15 @@ return [
 	'link_news' => 'News',
 	'link_news_categories' => 'News Categories',
 	'link_sub_news' => 'News',
+	'Blogs' => 'Blogs',
+	'AddBlogs' => 'Add Blogs',
+	'ListingAllBlogs' => 'Listing All Blogs',
+	'BlogTitle' => 'Blog Title',
+	'SortDescription' => 'Sort Description',
+	'blogshasbeenupdatedsuccessfully' =>'blogs has been updated successfully',
+	'AddBlogs' => 'Add Blogs',
+	'ListingAllblogs'=>'Listing All Blogs',
+
 	'link_customers' => 'Customers',
 	'link_tax_location' => 'Tax / Location',
 	'link_countries' => 'Countries',
@@ -1052,6 +1061,10 @@ return [
 	'newsemail'=>'Adding News (Email)',
 	'newsemailText'=>'Choose option to send email or not.',
 	
+	'blogsemail'=>'Adding Blogs (Email)',
+	'blogsemailText'=>'Choose option to send email or not.',
+	
+
 	'newsnotification'=>'Adding News (Notification)',
 	'newsnotificationtext'=>'Choose option to send notification or not.',
 	

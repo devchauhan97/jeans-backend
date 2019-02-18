@@ -449,7 +449,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//setting page
-	public function alertSetting(Request $request){
+	public function alertSetting(Request $request)
+	{
 		$title = array('pageTitle' => Lang::get("labels.alertSetting"));		
 		
 		$result = array();
@@ -462,7 +463,8 @@ class AdminSiteSettingController extends Controller
 	}
 	
 	//alertSetting
-	public function updateAlertSetting(Request $request){
+	public function updateAlertSetting(Request $request)
+	{
 		$orders_status = DB::table('alert_settings')->where('alert_id','=', $request->alert_id)->update([
 				'create_customer_email'				=>	$request->create_customer_email,
 				'create_customer_notification'		=>	$request->create_customer_notification,
@@ -477,6 +479,8 @@ class AdminSiteSettingController extends Controller
 				'news_notification'					=>	$request->news_notification,
 				'order_email'						=>	$request->order_email,
 				'order_notification'				=>	$request->order_notification,
+				'blogs_email'						=>	$request->blogs_email,
+				 
 				]);
 		
 		$message = Lang::get("labels.alertSettingUpdateMessage");

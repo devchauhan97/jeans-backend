@@ -175,7 +175,12 @@
         </li>
         @endif
         
-         <li class="treeview {{ Request::is('admin/section') ? 'active' : '' }}">
+        <li class="treeview {{ Request::is('admin/blogs') ? 'active' : '' }}">
+          <a  href="{{ URL::to('admin/blogs')}}"><i class="fa fa-credit-card" aria-hidden="true"></i> <span>
+          {{ trans('labels.Blogs') }}</span>
+          </a>
+        </li>
+        <li class="treeview {{ Request::is('admin/section') ? 'active' : '' }}">
           <a  href="{{ URL::to('admin/section')}}"><i class="fa fa-credit-card" aria-hidden="true"></i> <span>
           {{ trans('labels.section') }}</span>
           </a>

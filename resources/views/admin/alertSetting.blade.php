@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.createcustomernotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -75,7 +75,7 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.createcustomernotificationtext') }}</span>
                                 </div>
-                            </div>                            
+                            </div> -->                            
                             
                             <hr>
                             
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.ordernotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -105,7 +105,7 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.ordernotificationText') }}</span>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <hr>
                             
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.orderstatusnotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -135,7 +135,7 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.orderstatusnotificationtext') }}</span>
                                 </div>
-                            </div>                            
+                            </div>  -->                           
                             
                             <hr>
                             
@@ -153,7 +153,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                          <!--   <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.newproductnotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -165,7 +165,7 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.newproductnotificationtext') }}</span>
                                 </div>
-                            </div>                            
+                            </div> -->                            
                             
                             <hr>
                             
@@ -183,7 +183,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.forgotemailnotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -195,11 +195,11 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.forgotemailnotificationtext') }}</span>
                                 </div>
-                            </div>                         
+                            </div>  -->                        
                             
                             <hr>
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.newsemail') }}</label>
                                 <div class="col-sm-10 col-md-4">
                                     <label class=" control-label">
@@ -211,8 +211,7 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.newsemailText') }}</span>
                                 </div>
-                            </div>
-                            
+                            </div> 
                             <div class="form-group">
                            		<label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.newsnotification') }}</label>
                                 <div class="col-sm-10 col-md-4">
@@ -225,8 +224,20 @@
                                     </label>
                                     <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.newsnotificationtext') }}</span>
                                 </div>
-                            </div>  
-                            
+                            </div>  --> 
+                            <!-- <div class="form-group">
+                              <label for="shippingEnvironment" class="col-sm-2 col-md-3 control-label" style="">{{ trans('labels.blogsemail') }}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <label class=" control-label">
+                                          <input type="radio" name="blogs_email" value="1" class="flat-red" @if($result['setting'][0]->blogs_email==1) checked @endif > &nbsp;{{ trans('labels.Yes') }}
+                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    
+                                    <label class=" control-label">
+                                          <input type="radio" name="blogs_email" value="0" class="flat-red" @if($result['setting'][0]->blogs_email==0) checked @endif >  &nbsp;{{ trans('labels.No') }}
+                                    </label>
+                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">{{ trans('labels.blogsemailText') }}</span>
+                                </div>
+                            </div> -->
                               <!-- /.box-body -->
                             <div class="box-footer text-center">
                             	<button type="submit" class="btn btn-primary">{{ trans('labels.Update') }} </button>

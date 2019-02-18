@@ -1333,6 +1333,11 @@ $(document).ready(function(e) {
 		$('#id').val(id);
 		$("#deleteNewsModal").modal('show');
 	});
+	$(document).on('click', '#deleteBlogsId', function(){
+		var id = $(this).attr('blogs_id');
+		$('#id').val(id);
+		$("#deleteBlogsModal").modal('show');
+	});
 	
 	//deletePageModal
 	$(document).on('click', '#deletePageId', function(){
