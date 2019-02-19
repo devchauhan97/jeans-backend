@@ -10,7 +10,6 @@
       <li class="active">{{ trans('labels.EditProduct') }}</li>
     </ol>
   </section>
-  
   <!-- Main content -->
   <section class="content"> 
     <!-- Info boxes --> 
@@ -311,7 +310,26 @@
                                   </div>
                                 </div>
                                 
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.feature') }} </label>
+                                  <div class="col-sm-10 col-md-4">
+                                     <input type="checkbox" class="change_is_feature" name="is_feature" value="{{$result['product'][0]->is_feature}}"  {{$result['product'][0]->is_feature  ? 'checked':'' }}  >
+                                   </div>
+                                </div>
+
+ 
                                                                
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Product Spotlight') }} </label>
+                                  <div class="col-sm-10 col-md-4">
+                                      <select class="form-control" name="spotlight">
+                                          <option value="1" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 1) selected @endif >{{ trans('labels.Active') }}</option>
+                                          <option value="0" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 0) selected @endif>{{ trans('labels.Inactive') }}</option>                                      </select>
+                                      <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                      {{ trans('labels.Show Product Spotlight') }}</span>
+                                  </div>
+                                </div>
+                               
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Status') }} </label>
                                   <div class="col-sm-10 col-md-4">
@@ -322,13 +340,7 @@
                                       {{ trans('labels.SelectStatus') }}</span>
                                   </div>
                                 </div>
-                                <div class="form-group">
-                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.feature') }} </label>
-                                  <div class="col-sm-10 col-md-4">
-                                     <input type="checkbox" class="change_is_feature" name="is_feature" value="{{$result['product'][0]->is_feature}}"  {{$result['product'][0]->is_feature  ? 'checked':'' }}  >
-                                   </div>
-                                </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                   <label for="name"class="col-sm-2 col-md-3 control-label">{{ trans('labels.OptionName') }}       </label>
                                   <div class="col-sm-10 col-md-4">
                                     <select class="form-control edit-additional-option-id field-validate" name="products_options_id">       
@@ -362,7 +374,7 @@
                                   <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                   {{ trans('labels.AddOptionValueText') }}</span>
                                 </div>
-                              </div>
+                              </div> -->
                               <!-- /.box-body -->
                               <div class="box-footer text-center">
                                 <button type="submit" class="btn btn-primary">{{ trans('labels.Update') }}</button>

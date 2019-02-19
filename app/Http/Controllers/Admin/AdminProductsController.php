@@ -34,6 +34,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Events\ProductNotificationMail;
 use Event;
 use App\Http\Requests\AddAttributeValueRequest;
+use App\SpotLightProduct;
 class AdminProductsController extends Controller
 {
 	
@@ -96,8 +97,9 @@ class AdminProductsController extends Controller
 			->LeftJoin('specials', function ($join) {
 				$join->on('specials.products_id', '=', 'products.products_id')->where('status', '=', '1');
 			 })
+			->LeftJoin('spot_light_products','spot_light_products.products_id', 'products.products_id')
 			 
-			->select('products_to_categories.*', 'sub_categories_description.categories_name as categories_name','sub_categories.*', 'products.*','products_description.*', 'specials.specials_id', 'manufacturers.*', 'specials.products_id as special_products_id', 'specials.specials_new_products_price as specials_products_price', 'specials.specials_date_added as specials_date_added', 'specials.specials_last_modified as specials_last_modified', 'specials.expires_date')
+			->select('products_to_categories.*', 'sub_categories_description.categories_name as categories_name','sub_categories.*', 'products.*','products_description.*', 'specials.specials_id', 'manufacturers.*', 'specials.products_id as special_products_id', 'specials.specials_new_products_price as specials_products_price', 'specials.specials_date_added as specials_date_added', 'specials.specials_last_modified as specials_last_modified', 'specials.expires_date','spot_light_products.*')
 			->where('products_description.language_id','=', $language_id)
 			->where('sub_categories_description.language_id','=', $language_id)
 			->where('sub_categories.parent_id','>', 0);
@@ -270,28 +272,15 @@ class AdminProductsController extends Controller
 
 		
 
-		ProductsAttribute::create([
+		/*ProductsAttribute::create([
 					'products_id'   		  	=>     $products_id,
 					'options_id'     		  	=>     $request->products_options_id,
 					'options_values_id'     	=>     $request->products_options_values_id,
 					'options_values_price'		=>0,
 					'price_prefix'				=>'+',
 					'is_default'				=>1
-				]);
-
-		/*$options = DB::table('products_options')
-						->where('language_id','=', $language_id)
-						->get();
-		
-		$result['options'] = $options;
-		
-		$options_value = DB::table('products_options_values')
-			->where('language_id','=', $language_id)
-			->get();
-		
-		$result['options_value'] = $options_value;
-		$result['data'] = array('products_id'=>$products_id, 'language_id'=>$language_id);*/
-		
+				]);*/
+ 		
 		//notify users	
 		// $myVar = new AdminAlertController();
 		// $alertSetting = $myVar->newProductNotification($products_id);
@@ -690,6 +679,8 @@ class AdminProductsController extends Controller
 		$result['options_value'] = $options_value;
 		$result['products_attributes'] = $products_attributes;
 
+		$result['spot_light_products'] = DB::table('spot_light_products')->where('products_id',$products_id)->first();
+
 		return view("admin.editproduct", $title)->with('result', $result);		
 	}
 	//updateProduct
@@ -822,27 +813,19 @@ class AdminProductsController extends Controller
 					'status'     					  =>    0,
 				]);
 		}
+		 
 		
-		// $options = DB::table('products_options')
-		// 	->where('language_id','=', $language_id)
-		// 	->get();
-		
-		// $result['options'] = $options;
-		
-		// $options_value = DB::table('products_options_values')
-		// 	->where('language_id','=', $language_id)
-		// 	->get();
-		
-		// $result['options_value'] = $options_value;
-		// $result['data'] = array('products_id'=>$products_id, 'language_id'=>$language_id);
-
-		ProductsAttribute::updateOrcreate([
+		SpotLightProduct::updateOrcreate(['products_id'=>$products_id],[
+					'spot_light_status'     	=>    $request->spotlight,
+					'products_id'   =>    $products_id,
+				]);
+		/*ProductsAttribute::updateOrcreate([
 					'products_id'   		  	=>     $products_id,
 					'is_default'				=>1
 				],['options_id'     		  	=>     $request->products_options_id,
 					'options_values_id'     	=>     $request->products_options_values_id,
 					'options_values_price'		=>0,
-					'price_prefix'				=>'+',]);
+					'price_prefix'				=>'+',]);*/
 				
 		return redirect('admin/add/product/attribute/'.$products_id);		
 	}

@@ -1324,5 +1324,6 @@ return [
 	'DeleteSection'=>'Delete Section',
 	'SectionDeletedMessage'=>'Image section has been deleted successfully!',
 	'SectionUpdatedMessage'=>'Image section has been updated successfully!',
-	
+	'Product Spotlight' =>'Product Spotlight',
+	'Show Product Spotlight' =>'Show Product Spotlight',
 ];

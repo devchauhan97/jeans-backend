@@ -39,10 +39,7 @@ class BlogNotificationFired
         $setting =  Setting::get();
         $app_name = $setting[18]->value;
 
-        $product = DB::table('blogs')
-             
-            ->leftJoin('blog_descriptions','blogs.blogs_id','=','blog_descriptions.blogs_id')
-             ->select('blogs.*', 'blog_descriptions')->get();
+        $product = DB::table('blogs')->leftJoin('blog_descriptions','blogs.blogs_id','=','blog_descriptions.blogs_id')->select('blogs.*', 'blog_descriptions')->get();
         
         $result['product'] = $product;  
         

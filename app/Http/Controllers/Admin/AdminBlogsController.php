@@ -104,12 +104,9 @@ class AdminBlogsController extends Controller
 							->first();
 		$description = BlogDescription::where( 
 				 ['blogs_id'=> $blogs_id])->first(['description']);
-				
-			 
+			 		 
+		$result['description'] = $description != null ? $description->description :'';
 		 
-		$result['description'] = $description != null ? $description->description :'';	
-		 
-		
 		return view("admin.editblogs", $title)->with('result', $result);		
 	}
 	 

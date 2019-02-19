@@ -15,7 +15,6 @@
     <!-- Info boxes --> 
     
     <!-- /.row -->
-
     <div class="row">
       <div class="col-md-12">
         <div class="box">
