@@ -54,7 +54,11 @@
             <li class="{{ Request::is('admin/attributes') ? 'active' : '' }}  {{ Request::is('admin/addattributes') ? 'active' : '' }}  {{ Request::is('admin/editattributes/*') ? 'active' : '' }}" ><a href="{{ URL::to('admin/attributes' )}}"><i class="fa fa-circle-o"></i> {{ trans('labels.products_attributes') }}</a></li>
           </ul>
         </li>
-        
+        <li class="treeview {{ Request::is('admin/spotlightproduct') ? 'active' : '' }}">
+          <a  href="{{ URL::to('admin/spotlightproduct')}}"><i class="fa fa-credit-card" aria-hidden="true"></i> <span>
+          {{ trans('labels.SpotLightProduct') }}</span>
+          </a>
+        </li>
         <!-- <li class="treeview {{ Request::is('admin/newscategories') ? 'active' : '' }} {{ Request::is('admin/addnewscategory') ? 'active' : '' }} {{ Request::is('admin/editnewscategory/*') ? 'active' : '' }} {{ Request::is('admin/news') ? 'active' : '' }}  {{ Request::is('admin/addsubnews') ? 'active' : '' }}  {{ Request::is('admin/editsubnews/*') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-database" aria-hidden="true"></i>

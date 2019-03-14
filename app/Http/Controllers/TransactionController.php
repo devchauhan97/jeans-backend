@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\SpotLightProduct;
+use App\Transaction;
 use Illuminate\Http\Request;
 
-class SpotLightProductController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SpotLightProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\SpotLightProduct  $spotLightProduct
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function show(SpotLightProduct $spotLightProduct)
+    public function show(Transaction $transaction)
     {
         //
     }
@@ -52,10 +52,10 @@ class SpotLightProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\SpotLightProduct  $spotLightProduct
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(SpotLightProduct $spotLightProduct)
+    public function edit(Transaction $transaction)
     {
         //
     }
@@ -64,10 +64,10 @@ class SpotLightProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\SpotLightProduct  $spotLightProduct
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SpotLightProduct $spotLightProduct)
+    public function update(Request $request, Transaction $transaction)
     {
         //
     }
@@ -75,10 +75,10 @@ class SpotLightProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\SpotLightProduct  $spotLightProduct
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SpotLightProduct $spotLightProduct)
+    public function destroy(Transaction $transaction)
     {
         //
     }

@@ -22,6 +22,9 @@ Route::get('/',function () {
 
 Route::group(['middleware' => 'admin'], function () {
 
+	Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notFound']);
+	Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
+	
 	Route::get('/dashboard/{reportBase}', 'AdminController@dashboard');
 	Route::get('/post', 'AdminController@myPost');
 	//show admin personal info record
@@ -339,6 +342,9 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/edit/section/{id}', 'AdminPageSectionController@editSection');
 	Route::post('/update/section', 'AdminPageSectionController@updateSection');
 	Route::post('/delete/section/', 'AdminPageSectionController@deleteSection');
+
+	Route::get('/spotlightproduct', 'AdminSpotLightProductController@index');
+	Route::post('/update/spotlightproduct', 'AdminSpotLightProductController@updateSpotLightProducts');
 
 });
 

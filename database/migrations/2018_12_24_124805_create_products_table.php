@@ -32,6 +32,9 @@ class CreateProductsTable extends Migration
             $table->integer('low_limit')->nullable();
             $table->string('products_slug')->nullable();
             $table->tinyInteger('is_feature')->nullable();
+            $table->tinyInteger('semi_stitched')->nullable();
+            $table->string('products_tags_id')->nullable();
+            
             $table->timestamps();
         });
     }

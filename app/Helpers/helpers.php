@@ -91,7 +91,8 @@ function getFtpImage($imagepath)
     $host =Config::get('filesystems.disks.ftp.host');
     if(env('APP_ENV') == 'local')
         $image ='http://'.$host.'/images/'.$imagepath;
-    else $image ='http://'.$host.'/'.$imagepath;
+    else 
+      $image ='https://www.'.$host.'/'.$imagepath;
       
     return $image;
 }

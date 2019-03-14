@@ -59,7 +59,7 @@
        <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
        
       </div>
-      <img src="http://ionicecommerce.com/testcontroller1.php">
+      
       <div class="row">
        
         <!-- /.col -->

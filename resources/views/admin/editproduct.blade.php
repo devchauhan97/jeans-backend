@@ -202,7 +202,14 @@
                                         
                                     </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.SortDescription') }} </label>
+                                  <div class="col-sm-10 col-md-4">
+                                     <input type="text" name="sort_description_<?=$description_data['languages_id']?>" class="form-control field-validate" value='{{$description_data['sort_description']}}'>  
+                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;margin-top: 0;">{{ trans('labels.SortDescription') }}</span>
+                                    <span class="help-block hidden">{{ trans('labels.textRequiredSortDescription') }}</span>
+                                  </div>
+                                </div>  
                                 <div class="form-group">
                                 	<label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Description') }} ({{ $description_data['language_name'] }})</label>
                                     <div class="col-sm-10 col-md-8">                                     
@@ -316,19 +323,17 @@
                                      <input type="checkbox" class="change_is_feature" name="is_feature" value="{{$result['product'][0]->is_feature}}"  {{$result['product'][0]->is_feature  ? 'checked':'' }}  >
                                    </div>
                                 </div>
-
- 
-                                                               
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Product Spotlight') }} </label>
                                   <div class="col-sm-10 col-md-4">
-                                      <select class="form-control" name="spotlight">
-                                          <option value="1" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 1) selected @endif >{{ trans('labels.Active') }}</option>
-                                          <option value="0" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 0) selected @endif>{{ trans('labels.Inactive') }}</option>                                      </select>
+                                      <select class="form-control" name="spot_light_status">
+                                        <option value="1" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 1) selected @endif >{{ trans('labels.Active') }}</option>
+                                        <option value="0" @if($result['spot_light_products'] && $result['spot_light_products']->spot_light_status == 0) selected @endif>{{ trans('labels.Inactive') }}</option>                                      
+                                        </select>
                                       <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
                                       {{ trans('labels.Show Product Spotlight') }}</span>
                                   </div>
-                                </div>
+                                </div> -->
                                
                                 <div class="form-group">
                                   <label for="name" class="col-sm-2 col-md-3 control-label">{{ trans('labels.Status') }} </label>

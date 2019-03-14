@@ -73,12 +73,14 @@ class AdminBlogsController extends Controller
 		}else{
 			$uploadImage = '';
 		}	
-		
+		 
 		$blogs_id = Blog::create([
 					'image'  			=>   $uploadImage,
 					'title'	 	 		=>   $request->title,
 					'sort_description'	=>   $request->sort_description,
-					'status'		 	 =>   $request->status
+					'status'		 	 =>   $request->status,
+					'posted_by'		 	 =>   auth()->guard('admin')->user()->myid
+
 					])->blogs_id;
 		
 		$slug_flag = false;	

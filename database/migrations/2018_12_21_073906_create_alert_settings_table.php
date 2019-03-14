@@ -29,6 +29,8 @@ class CreateAlertSettingsTable extends Migration
             $table->tinyInteger('contact_us_notification')->default('0');
             $table->tinyInteger('order_email')->default('0');
             $table->tinyInteger('order_notification')->default('0');
+            $table->tinyInteger('blogs_email')->default('0');
+            
             $table->timestamps();
         });
     }

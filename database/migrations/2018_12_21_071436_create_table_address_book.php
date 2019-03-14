@@ -27,6 +27,8 @@ class CreateTableAddressBook extends Migration
             $table->string('entry_state',255)->nullable();
             $table->integer('entry_country_id')->default('0');
             $table->integer('entry_zone_id')->default('0');
+            $table->integer('entry_phone_no')->nullable();
+
             $table->timestamps();
         });
         

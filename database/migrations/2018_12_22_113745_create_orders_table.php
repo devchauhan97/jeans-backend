@@ -70,6 +70,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('free_shipping')->default('0');
             $table->string('product_ids',255);
             $table->tinyInteger('ordered_source')->comment('1: Website, 2: App');
+            $table->string('unique_order_id');
             $table->timestamps();
         });
     }

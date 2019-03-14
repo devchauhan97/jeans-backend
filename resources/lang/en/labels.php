@@ -60,6 +60,7 @@ return [
 	'ListingAllBlogs' => 'Listing All Blogs',
 	'BlogTitle' => 'Blog Title',
 	'SortDescription' => 'Sort Description',
+	'textRequiredSortDescription'=>'This field is required.',
 	'blogshasbeenupdatedsuccessfully' =>'blogs has been updated successfully',
 	'AddBlogs' => 'Add Blogs',
 	'ListingAllblogs'=>'Listing All Blogs',
@@ -1326,4 +1327,6 @@ return [
 	'SectionUpdatedMessage'=>'Image section has been updated successfully!',
 	'Product Spotlight' =>'Product Spotlight',
 	'Show Product Spotlight' =>'Show Product Spotlight',
+	'SpotLightProduct' 			=>'SpotLight Product',
+	'SpotLightProductSelected' => 'List of products in Spotlight',
 ];

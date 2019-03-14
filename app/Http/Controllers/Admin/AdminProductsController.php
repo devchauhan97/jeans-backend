@@ -97,9 +97,7 @@ class AdminProductsController extends Controller
 			->LeftJoin('specials', function ($join) {
 				$join->on('specials.products_id', '=', 'products.products_id')->where('status', '=', '1');
 			 })
-			->LeftJoin('spot_light_products','spot_light_products.products_id', 'products.products_id')
-			 
-			->select('products_to_categories.*', 'sub_categories_description.categories_name as categories_name','sub_categories.*', 'products.*','products_description.*', 'specials.specials_id', 'manufacturers.*', 'specials.products_id as special_products_id', 'specials.specials_new_products_price as specials_products_price', 'specials.specials_date_added as specials_date_added', 'specials.specials_last_modified as specials_last_modified', 'specials.expires_date','spot_light_products.*')
+			->select('products_to_categories.*', 'sub_categories_description.categories_name as categories_name','sub_categories.*', 'products.*','products_description.*', 'specials.specials_id', 'manufacturers.*', 'specials.products_id as special_products_id', 'specials.specials_new_products_price as specials_products_price', 'specials.specials_date_added as specials_date_added', 'specials.specials_last_modified as specials_last_modified', 'specials.expires_date')
 			->where('products_description.language_id','=', $language_id)
 			->where('sub_categories_description.language_id','=', $language_id)
 			->where('sub_categories.parent_id','>', 0);
@@ -215,6 +213,8 @@ class AdminProductsController extends Controller
 
 			$products_name = 'products_name_'.$languages_data->languages_id;
 			$products_description = 'products_description_'.$languages_data->languages_id;
+			$sort_description = 'sort_description_'.$languages_data->languages_id;
+
 			//slug
 			if($slug_flag==false) {
 				$slug_flag=true;
@@ -242,6 +242,7 @@ class AdminProductsController extends Controller
 			
 			DB::table('products_description')->insert([
 					'products_name'  	     =>   $request->$products_name,
+					'sort_description'  	     =>   $request->$sort_description,
 					'language_id'			 =>   $languages_data->languages_id,
 					'products_id'			 =>   $products_id,
 					'products_url'			 =>   $request->products_url,
@@ -270,7 +271,10 @@ class AdminProductsController extends Controller
 					'categories_id'     =>     $request->sub_category_id
 				]);	
 
-		
+		// SpotLightProduct::create([
+		// 			'products_id'   	=>     $products_id,
+		// 			'spot_light_status'     =>     $request->spot_light_status
+		// 		]);	
 
 		/*ProductsAttribute::create([
 					'products_id'   		  	=>     $products_id,
@@ -616,11 +620,14 @@ class AdminProductsController extends Controller
 				
 			if(count($description)>0){								
 				$description_data[$languages_data->languages_id]['products_name'] = $description[0]->products_name;
+				$description_data[$languages_data->languages_id]['sort_description'] = $description[0]->sort_description;
+
 				$description_data[$languages_data->languages_id]['products_description'] = $description[0]->products_description;
 				$description_data[$languages_data->languages_id]['language_name'] = $languages_data->name;
 				$description_data[$languages_data->languages_id]['languages_id'] = $languages_data->languages_id;										
 			}else{
 				$description_data[$languages_data->languages_id]['products_name'] = '';
+				$description_data[$languages_data->languages_id]['sort_description'] = '';
 				$description_data[$languages_data->languages_id]['products_description'] = '';
 				$description_data[$languages_data->languages_id]['language_name'] = $languages_data->name;
 				$description_data[$languages_data->languages_id]['languages_id'] = $languages_data->languages_id;	
@@ -750,17 +757,20 @@ class AdminProductsController extends Controller
 		foreach($languages as $languages_data) {
 
 			$products_name = 'products_name_'.$languages_data->languages_id;
+			$sort_description = 'sort_description_'.$languages_data->languages_id;
 			$products_description = 'products_description_'.$languages_data->languages_id;			
 			$checkExist = DB::table('products_description')->where('products_id','=',$products_id)->where('language_id','=',$languages_data->languages_id)->get();			
 			if(count($checkExist)>0) {
 				DB::table('products_description')->where('products_id','=',$products_id)->where('language_id','=',$languages_data->languages_id)->update([
 					'products_name'  	     =>   $request->$products_name,
+					'sort_description'  	     =>   $request->$sort_description,
 					'products_url'			 =>   $request->products_url,
 					'products_description'	 =>   addslashes($request->$products_description)
 					]);
 			} else {
 				DB::table('products_description')->insert([
 						'products_name'  	     =>   $request->$products_name,
+						'sort_description'  	     =>   $request->$sort_description,
 						'language_id'			 =>   $languages_data->languages_id,
 						'products_id'			 =>   $products_id,
 						'products_url'			 =>   $request->products_url,
@@ -815,10 +825,10 @@ class AdminProductsController extends Controller
 		}
 		 
 		
-		SpotLightProduct::updateOrcreate(['products_id'=>$products_id],[
-					'spot_light_status'     	=>    $request->spotlight,
-					'products_id'   =>    $products_id,
-				]);
+		// SpotLightProduct::updateOrcreate(['products_id'=>$products_id],[
+		// 			'spot_light_status'     	=>    $request->spot_light_status,
+		// 			'products_id'   =>    $products_id,
+		// 		]);
 		/*ProductsAttribute::updateOrcreate([
 					'products_id'   		  	=>     $products_id,
 					'is_default'				=>1
@@ -839,7 +849,8 @@ class AdminProductsController extends Controller
 	}
 		
 	//editProductAttribute
-	public function editproductattribute(Request $request){
+	public function editproductattribute(Request $request)
+	{
 		
 		//get function from other controller
 		$myVar = new AdminSiteSettingController();

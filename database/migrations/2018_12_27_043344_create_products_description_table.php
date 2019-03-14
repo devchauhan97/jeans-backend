@@ -21,6 +21,7 @@ class CreateProductsDescriptionTable extends Migration
             $table->text('products_description')->nullable(); 
             $table->string('products_url',255)->nullable(); 
             $table->integer('products_viewed')->nullable()->default('0');
+            $table->string('sort_description')->nullable();
             $table->timestamps();
         });
     }
